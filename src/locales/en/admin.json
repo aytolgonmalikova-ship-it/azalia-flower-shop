@@ -91,7 +91,11 @@
       "inStock": "Product is in stock",
       "isVisible": "Show on storefront",
       "imageUrl": "Image link",
-      "imageUrlHint": "Paste a link to a photo or upload a file above."
+      "imageUrlHint": "Paste a link to a photo or upload a file above.",
+      "oldPrice": "Old price, som",
+      "oldPriceHint": "Optional. If higher than the price, the product appears under “On sale”.",
+      "isHit": "Bestseller",
+      "isNew": "New in"
     },
     "deleteTitle": "Delete this product?",
     "deleteText": "“{{name}}” will disappear from the catalogue. This cannot be undone.",
@@ -119,7 +123,9 @@
     "loadErrorTitle": "Could not load products",
     "loadErrorText": "Check your internet connection and the Firestore rules, then try again.",
     "deniedTitle": "No access to products",
-    "deniedText": "Firestore rejected the request. Make sure the latest rules from firestore.rules are published in the Firebase Console."
+    "deniedText": "Firestore rejected the request. Make sure the latest rules from firestore.rules are published in the Firebase Console.",
+    "seedMissing_one": "Load missing starter products ({{count}})",
+    "seedMissing_other": "Load missing starter products ({{count}})"
   },
   "orders": {
     "title": "Orders",
@@ -259,7 +265,8 @@
     "imageTooLarge": "The image is too large. Choose another photo or use a link.",
     "imageReadFailed": "Could not read the file. Choose another photo.",
     "productDenied": "Permission denied: Firestore rejected the request. Make sure the rules from firestore.rules are published.",
-    "productSaveFailed": "Could not save the product. Check your internet connection and try again."
+    "productSaveFailed": "Could not save the product. Check your internet connection and try again.",
+    "oldPriceInvalid": "The old price must be higher than the current price."
   },
   "auth": {
     "title": "Sign in to the control panel",

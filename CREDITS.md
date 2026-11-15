@@ -42,5 +42,28 @@
 | `src/assets/images/peonies-pale.jpg` | [Peonies with white space (Unsplash).jpg](https://commons.wikimedia.org/wiki/File:Peonies_with_white_space_%28Unsplash%29.jpg) | CC0 |
 | `src/assets/images/hero-roses.jpg` | [Pastel rose bouquet (Unsplash).jpg](https://commons.wikimedia.org/wiki/File:Pastel_rose_bouquet_%28Unsplash%29.jpg) (крупная версия для главного экрана) | CC0 |
 
-Файлы `hero-peonies.jpg`, `peonies-pale.jpg`, `pink-daisies.jpg`, `roses-bouquet.jpg`, `tulips-vase.jpg` и `chamomile-bouquet.jpg` на сайте больше не используются
-(их заменили более выразительные фотографии), но оставлены в папке на случай, если понадобятся.
+Файлы `hero-peonies.jpg`, `peonies-pale.jpg`, `pink-daisies.jpg`, `roses-bouquet.jpg`, `tulips-vase.jpg`, `chamomile-bouquet.jpg`,
+`gerbera.jpg` и `peach-roses.jpg` используются как фото товаров каталога (`src/data/products.js`);
+`bouquet-festive.jpg`, `bridal-bouquet.jpg` и `ranunculus.jpg` — и в разделе услуг, и в каталоге.
+
+## Фотографии с Unsplash (новые позиции каталога)
+
+Фото товаров, добавленных в `src/data/products.js` с адресом `images.unsplash.com`, загружаются напрямую с Unsplash
+и используются по [лицензии Unsplash](https://unsplash.com/license) (бесплатно, в том числе в коммерческих целях,
+указание автора не обязательно). Идентификатор фото указан в коде рядом с товаром.
+
+| Товар (id) | Фото Unsplash |
+| --- | --- |
+| `peachCloud` | `photo-1563241527-3004b7be0ffd` |
+| `sunflowerCraft` | `photo-1567696153798-9111f9cd3d0d` |
+| `peonyRoses` | `photo-1582794543139-8ac9cb0f7b11` |
+| `roseVase` | `photo-1591886960571-74d43a9d4166` |
+| `sunflowers` | `photo-1455659817273-f96807779a8a` |
+| `monstera` | `photo-1614594975525-e45190c55d0b` |
+| `ficusGinseng` | `photo-1512428813834-c702c7702b78` |
+| `chlorophytum` | `photo-1572688484438-313a6e50c333` |
+| `haworthia` | `photo-1485955900006-10f4d324d411` |
+| `macarons` | `photo-1569864358642-9d1684040f43` |
+| `chocolates` | `photo-1481391319762-47dff72954d9` |
+| `balloons` | `photo-1530103862676-de8c9debad1d` |
+| `candle` | `photo-1603006905003-be475563bc59` |

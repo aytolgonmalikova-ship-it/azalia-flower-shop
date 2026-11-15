@@ -16,7 +16,7 @@ import {
 import { compressImage } from '../../utils/image';
 
 const ERRORS = 'admin.errors';
-const FIELDS = ['title', 'description', 'price', 'imageUrl'];
+const FIELDS = ['title', 'description', 'price', 'oldPrice', 'imageUrl'];
 
 const isLink = (value) => /^https?:\/\//i.test(value);
 
@@ -36,6 +36,13 @@ function validate(values) {
   const price = Number(values.price);
   if (!values.price || !Number.isFinite(price) || price <= 0) {
     errors.price = { key: `${ERRORS}.priceInvalid` };
+  }
+  // Старая цена необязательна; если указана — она больше текущей (иначе это не скидка).
+  if (values.oldPrice) {
+    const oldPrice = Number(values.oldPrice);
+    if (!Number.isFinite(oldPrice) || oldPrice <= 0 || (Number.isFinite(price) && oldPrice <= price)) {
+      errors.oldPrice = { key: `${ERRORS}.oldPriceInvalid` };
+    }
   }
   const image = values.image.trim();
   if (image && !isLink(image) && !image.startsWith('data:image/') && image !== values.initialImage) {
@@ -62,6 +69,9 @@ export default function ProductFormModal({ product = null, onSave, onClose }) {
     category: product?.category ?? PRODUCT_CATEGORIES[0],
     color: product?.color ?? PRODUCT_COLORS[0],
     price: product ? String(product.price) : '',
+    oldPrice: product?.oldPrice ? String(product.oldPrice) : '',
+    isHit: product?.isHit ?? false,
+    isNew: product?.isNew ?? false,
     image: product?.image ?? '',
     // Фото, с которым открыли форму: если его не меняли, поле фото не перезаписывается.
     initialImage: product?.image ?? '',
@@ -136,6 +146,9 @@ export default function ProductFormModal({ product = null, onSave, onClose }) {
       category: values.category,
       color: values.color,
       price: Math.round(Number(values.price)),
+      oldPrice: values.oldPrice ? Math.round(Number(values.oldPrice)) : null,
+      isHit: values.isHit,
+      isNew: values.isNew,
       inStock: values.inStock,
       isVisible: values.isVisible,
     };
@@ -285,19 +298,52 @@ export default function ProductFormModal({ product = null, onSave, onClose }) {
                 onChange={handleChange}
               />
             </div>
-            <FormField
-              id="product-price"
-              name="price"
-              label={t('admin.products.form.price')}
-              placeholder="0"
-              type="number"
-              inputMode="numeric"
-              min="1"
-              step="1"
-              value={values.price}
-              error={errors.price}
-              onChange={handleChange}
-            />
+            <div className="admin-form__row">
+              <FormField
+                id="product-price"
+                name="price"
+                label={t('admin.products.form.price')}
+                placeholder="0"
+                type="number"
+                inputMode="numeric"
+                min="1"
+                step="1"
+                value={values.price}
+                error={errors.price}
+                onChange={handleChange}
+              />
+              <FormField
+                id="product-old-price"
+                name="oldPrice"
+                label={t('admin.products.form.oldPrice')}
+                hint={t('admin.products.form.oldPriceHint')}
+                placeholder="—"
+                type="number"
+                inputMode="numeric"
+                min="1"
+                step="1"
+                required={false}
+                value={values.oldPrice}
+                error={errors.oldPrice}
+                onChange={handleChange}
+              />
+            </div>
+            {[
+              ['isHit', 'admin.products.form.isHit'],
+              ['isNew', 'admin.products.form.isNew'],
+            ].map(([name, label]) => (
+              <label key={name} className="admin-switch">
+                <input
+                  type="checkbox"
+                  role="switch"
+                  className="admin-switch__input"
+                  checked={values[name]}
+                  onChange={(event) => setValue(name, event.target.checked)}
+                />
+                <span className="admin-switch__track" aria-hidden="true" />
+                <span>{t(label)}</span>
+              </label>
+            ))}
             <label className="admin-switch">
               <input
                 type="checkbox"

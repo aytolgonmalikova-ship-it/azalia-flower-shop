@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/Button.jsx';
 import FlowerIcon from '../components/FlowerIcon.jsx';
+import { PRODUCT_CATEGORIES } from '../data/products';
 import heroImage from '../assets/images/hero-roses.jpg';
 
 export default function Hero() {
@@ -19,11 +21,23 @@ export default function Hero() {
           </h1>
           <p className="hero__subtitle">{t('hero.subtitle')}</p>
           <div className="hero__actions">
-            <Button to="/contact">{t('hero.cta')}</Button>
+            <Button to="/catalog">{t('hero.cta')}</Button>
             <Button href="#services" variant="secondary">
               {t('hero.secondary')}
             </Button>
           </div>
+          {/* Быстрый переход в нужный раздел каталога — без прокрутки главной */}
+          <nav className="hero__quick" aria-label={t('hero.quickLabel')}>
+            <ul className="hero__quick-list">
+              {PRODUCT_CATEGORIES.map((category) => (
+                <li key={category}>
+                  <Link to={`/catalog?category=${category}`} className="chip chip--sm chip--link">
+                    {t(`catalog.categories.${category}`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
 

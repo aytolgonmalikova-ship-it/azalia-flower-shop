@@ -13,8 +13,8 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Welcome />
       <FeaturedProducts />
+      <Welcome />
       <ServicesSection />
       <Suspense fallback={null}>
         <ReviewsSection />

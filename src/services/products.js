@@ -4,7 +4,9 @@
  * Документ:
  *  - name, description — текст или ключ перевода catalog.products.<id>.* (стартовый каталог);
  *  - price — цена в сомах, целое число больше нуля;
- *  - category, color — значения фильтров каталога (data/products.js);
+ *  - category, color — значения фильтров каталога (data/products.js); у старых документов
+ *    category может быть прежней (по виду цветка) — она переводится в раздел (normalizeCategory);
+ *  - oldPrice — цена до скидки или null; isHit, isNew — подборки на главной;
  *  - image — ссылка на фото или data:-адрес сжатого фото, загруженного из панели;
  *  - localImage — id фотографии из стартового каталога (если своё фото не задано);
  *  - imagePosition — точка кадрирования фото в карточке;
@@ -25,7 +27,9 @@ import {
   updateDoc,
 } from 'firebase/firestore/lite';
 import {
+  isRemoteImage,
   LOCAL_PRODUCT_IMAGES,
+  normalizeCategory,
   PRODUCT_CATEGORIES,
   PRODUCT_COLORS,
   PRODUCTS,
@@ -49,18 +53,22 @@ const asText = (value) => (typeof value === 'string' ? value.trim() : '');
 function toProduct(snapshot) {
   const data = snapshot.data();
   const price = Number(data.price);
+  const oldPrice = Number(data.oldPrice);
   return {
     id: snapshot.id,
     name: asText(data.name),
     description: asText(data.description),
     price: Number.isFinite(price) ? price : 0,
-    category: PRODUCT_CATEGORIES.includes(data.category) ? data.category : PRODUCT_CATEGORIES[0],
+    oldPrice: Number.isFinite(oldPrice) && oldPrice > price ? oldPrice : undefined,
+    category: normalizeCategory(data.category),
     color: PRODUCT_COLORS.includes(data.color) ? data.color : PRODUCT_COLORS[0],
     image: asText(data.image) || LOCAL_PRODUCT_IMAGES[data.localImage] || '',
     imagePosition: asText(data.imagePosition) || undefined,
     // Поля может не быть у документа, созданного вручную в консоли: считаем товар доступным.
     inStock: data.inStock !== false,
     isVisible: data.isVisible !== false,
+    isHit: data.isHit === true,
+    isNew: data.isNew === true,
     order: Number.isFinite(data.order) ? data.order : 0,
   };
 }
@@ -101,6 +109,16 @@ function toDocData(values, { partial }) {
     data.localImage = null;
     data.imagePosition = null;
   }
+  // Старая цена: пусто — скидки нет. Она должна быть больше текущей.
+  if (has('oldPrice')) {
+    const oldPrice = values.oldPrice == null || values.oldPrice === '' ? null : Math.round(Number(values.oldPrice));
+    if (oldPrice !== null && (!Number.isFinite(oldPrice) || oldPrice <= 0)) {
+      throw productError(PRODUCT_ERROR_INVALID);
+    }
+    data.oldPrice = oldPrice;
+  }
+  if (has('isHit')) data.isHit = Boolean(values.isHit);
+  if (has('isNew')) data.isNew = Boolean(values.isNew);
   if (has('inStock')) data.inStock = Boolean(values.inStock);
   if (has('isVisible')) data.isVisible = Boolean(values.isVisible);
   return data;
@@ -109,7 +127,9 @@ function toDocData(values, { partial }) {
 // Поля документа в том виде, в каком их отдаёт toProduct (для обновления списка в памяти).
 function toLocalPatch(data) {
   const { localImage: _localImage, imagePosition, ...rest } = data;
-  return 'image' in data ? { ...rest, imagePosition: imagePosition ?? undefined } : rest;
+  const patch = 'image' in data ? { ...rest, imagePosition: imagePosition ?? undefined } : rest;
+  if ('oldPrice' in data) patch.oldPrice = data.oldPrice ?? undefined;
+  return patch;
 }
 
 // Все товары, включая скрытые: витрина сама отбирает видимые (hooks/useProducts.js).
@@ -142,40 +162,78 @@ export const setProductVisibility = (id, isVisible) => updateProduct(id, { isVis
 
 export const deleteProduct = (id) => deleteDoc(doc(db, COLLECTION, id));
 
+// Поля документа для товара стартового каталога.
+function starterDoc(product, index) {
+  const remote = isRemoteImage(product.image);
+  return {
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    oldPrice: product.oldPrice ?? null,
+    category: product.category,
+    color: product.color,
+    image: remote ? product.image : '',
+    localImage: remote ? null : product.id,
+    imagePosition: product.imagePosition ?? null,
+    isHit: product.isHit,
+    isNew: product.isNew,
+    inStock: product.inStock,
+    isVisible: true,
+    order: index,
+  };
+}
+
 /*
- * Первичная инициализация: переносит стартовый каталог (data/products.js) в Firestore.
- * ID документов совпадают с id товаров, поэтому повторный запуск ничего не дублирует:
- * записываются только те товары, которых в коллекции ещё нет.
+ * Подборки и раздел для товара стартового каталога, записанного до их появления.
+ * Трогаем только то, чего в документе ещё нет (или прежнюю категорию по виду цветка),
+ * чтобы не перезаписать изменения администратора.
+ */
+function starterPatch(product, data) {
+  const patch = {};
+  if (!('isHit' in data)) patch.isHit = product.isHit;
+  if (!('isNew' in data)) patch.isNew = product.isNew;
+  if (!('oldPrice' in data)) patch.oldPrice = product.oldPrice ?? null;
+  if (!PRODUCT_CATEGORIES.includes(data.category)) patch.category = normalizeCategory(data.category);
+  return patch;
+}
+
+// Сколько товаров стартового каталога ещё нет в списке (для кнопки дозагрузки в панели).
+export function countMissingStarters(items) {
+  const ids = new Set(items.map((item) => item.id));
+  return PRODUCTS.filter((product) => !ids.has(product.id)).length;
+}
+
+/*
+ * Первичная инициализация и дозагрузка: переносит стартовый каталог (data/products.js)
+ * в Firestore. ID документов совпадают с id товаров, поэтому повторный запуск ничего
+ * не дублирует: записываются только товары, которых в коллекции ещё нет, а у уже
+ * записанных дополняются подборки и раздел (см. starterPatch).
  * Возвращает количество добавленных товаров.
  */
 export async function seedProducts() {
   const snapshot = await getDocs(collection(db, COLLECTION));
-  const existing = new Set(snapshot.docs.map((entry) => entry.id));
-  const missing = PRODUCTS.map((product, index) => ({ product, index })).filter(
-    ({ product }) => !existing.has(product.id),
-  );
+  const existing = new Map(snapshot.docs.map((entry) => [entry.id, entry.data()]));
+  const starters = PRODUCTS.map((product, index) => ({ product, index }));
+  const missing = starters.filter(({ product }) => !existing.has(product.id));
+  const outdated = starters
+    .filter(({ product }) => existing.has(product.id))
+    .map(({ product }) => ({ id: product.id, patch: starterPatch(product, existing.get(product.id)) }))
+    .filter(({ patch }) => Object.keys(patch).length > 0);
 
   // Отдельные запросы, а не пакет: у пакетной записи жёсткий лимит обращений
   // к документам в правилах безопасности, а проверка isAdmin() их использует.
-  const results = await Promise.allSettled(
-    missing.map(({ product, index }) =>
+  const results = await Promise.allSettled([
+    ...missing.map(({ product, index }) =>
       setDoc(doc(db, COLLECTION, product.id), {
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        category: product.category,
-        color: product.color,
-        image: '',
-        localImage: product.id,
-        imagePosition: product.imagePosition ?? null,
-        inStock: true,
-        isVisible: true,
-        order: index,
+        ...starterDoc(product, index),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       }),
     ),
-  );
+    ...outdated.map(({ id, patch }) =>
+      updateDoc(doc(db, COLLECTION, id), { ...patch, updatedAt: serverTimestamp() }),
+    ),
+  ]);
 
   const failure = results.find((result) => result.status === 'rejected');
   if (failure) throw failure.reason;

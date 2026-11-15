@@ -476,3 +476,104 @@
   gap: 1.1rem 1rem;
   margin-top: 2rem;
 }
+
+/* ---------- Hero: быстрые ссылки на разделы каталога ---------- */
+.hero__quick {
+  margin-top: 1.5rem;
+}
+
+.hero__quick-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* На телефоне — одна строка, листается пальцем: не удлиняет первый экран */
+@media (max-width: 639px) {
+  .hero__quick {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .hero__quick-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 2px var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .hero__quick-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero__quick-list > li {
+    flex-shrink: 0;
+  }
+
+  .hero__actions {
+    margin-top: 1.5rem;
+  }
+
+  .hero__visual {
+    margin-top: 1.75rem;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/*
+ * ---------- Горизонтальные ленты на телефоне ----------
+ * Преимущества, услуги и отзывы на узком экране стоят не столбиком, а в одну
+ * прокручиваемую строку: главная становится в несколько раз короче.
+ */
+@media (max-width: 699px) {
+  .features,
+  .services__grid,
+  .reviews__grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: 82%;
+    gap: 0.85rem;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 6px var(--gutter) 18px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .features {
+    grid-auto-columns: 74%;
+  }
+
+  .features::-webkit-scrollbar,
+  .services__grid::-webkit-scrollbar,
+  .reviews__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .features > *,
+  .services__grid > *,
+  .reviews__grid > * {
+    scroll-snap-align: start;
+  }
+
+  .feature {
+    padding: 1.5rem 1.35rem 1.6rem;
+  }
+
+  .welcome__top {
+    gap: 1.5rem;
+  }
+
+  .welcome__media img {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Узкие телефоны (360–399px): чуть меньше боковые поля, больше места под две колонки */
+@media (max-width: 399px) {
+  :root {
+    --gutter: 16px;
+  }
+}

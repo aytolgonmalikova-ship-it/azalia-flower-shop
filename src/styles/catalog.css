@@ -1,43 +1,308 @@
-/* ---------- Каталог: фильтры ---------- */
-.filters {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  gap: 1.4rem;
-  padding: clamp(1.4rem, 3.6vw, 2.2rem) clamp(1.2rem, 3.6vw, 2.4rem);
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 34px 78px 34px 78px / 34px 62px 34px 62px;
-  box-shadow:
-    inset 0 1px 0 var(--card-highlight),
-    var(--shadow-sm);
+/* ---------- Каталог: заголовок ---------- */
+/* Компактная «шапка» страницы: товары начинаются уже на первом экране. */
+.catalog {
+  padding-top: clamp(1.25rem, 3vw, 2rem);
 }
 
-.filters::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background:
-    radial-gradient(40% 60% at 100% 0%, var(--card-blush), transparent 72%),
-    radial-gradient(36% 56% at 0% 100%, var(--card-lilac), transparent 72%);
-  pointer-events: none;
+.catalog__head {
+  margin-bottom: clamp(0.9rem, 2.5vw, 1.4rem);
 }
 
-.filters__title {
-  margin-bottom: 0.7rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent-text);
+.catalog__title {
+  margin-top: 0.4rem;
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
-.filters__list {
+.catalog__subtitle {
+  max-width: 640px;
+  margin-top: 0.4rem;
+  color: var(--text-muted);
+}
+
+/* На телефоне подзаголовок не нужен: экономим первый экран под товары. */
+@media (max-width: 559px) {
+  .catalog__subtitle {
+    display: none;
+  }
+}
+
+/* ---------- Хлебные крошки ---------- */
+.breadcrumbs__list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  align-items: center;
+  gap: 0.15rem 0.35rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.breadcrumbs__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--accent-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.breadcrumbs__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.breadcrumbs [aria-current='page'] {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.breadcrumbs__sep {
+  opacity: 0.6;
+}
+
+/* ---------- Каталог: липкая панель (разделы, цвет, сортировка) ---------- */
+.catalog-bar {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 40;
+  padding-block: 0.55rem;
+  background: var(--header-bg);
+  border-block: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.catalog-bar__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Вкладки разделов: одна строка, на узком экране листается пальцем */
+.catalog-tabs,
+.showcase__tabs {
+  display: flex;
+  flex: 1;
+  gap: 0.4rem;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  /* края ленты растворяются, намекая, что её можно прокрутить */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 18px), transparent);
+  mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 18px), transparent);
+  padding-inline: 2px 14px;
+}
+
+.catalog-tabs::-webkit-scrollbar,
+.showcase__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.catalog-tabs > li {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.catalog-tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.35rem 0.95rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 999px 999px 999px 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.93rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.catalog-tab:hover {
+  border-color: var(--accent);
+}
+
+.catalog-tab.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.catalog-tab__count {
+  min-width: 1.5em;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.catalog-tab.is-active .catalog-tab__count {
+  background: color-mix(in srgb, var(--on-accent) 22%, transparent);
+  color: var(--on-accent);
+}
+
+.catalog-bar__tools {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Кнопка «Цвет» и сортировка: на телефоне — только значки */
+.catalog-tool,
+.catalog-sort {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.7rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.25s ease;
+}
+
+.catalog-tool:hover,
+.catalog-sort:hover,
+.catalog-sort:focus-within {
+  border-color: var(--accent);
+}
+
+.catalog-tool.is-active {
+  border-color: var(--accent);
+}
+
+.catalog-tool__badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.72rem;
+}
+
+.catalog-tool__chevron {
+  display: none;
+  transition: transform 0.3s var(--ease);
+}
+
+.catalog-tool__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.catalog-sort select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+@media (max-width: 759px) {
+  .catalog-tool,
+  .catalog-sort {
+    padding: 0;
+  }
+
+  .catalog-tool__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 760px) {
+  .catalog-tool__chevron {
+    display: block;
+  }
+
+  .catalog-tool__badge {
+    position: static;
+  }
+
+  /* На планшете и компьютере выбранная сортировка видна текстом */
+  .catalog-sort {
+    padding-left: 0.85rem;
+    padding-right: 0.4rem;
+  }
+
+  .catalog-sort select {
+    position: static;
+    width: auto;
+    padding-right: 0.3rem;
+    opacity: 1;
+    outline: none;
+  }
+}
+
+/* Строка цветов под панелью: на телефоне — одна прокручиваемая строка */
+.catalog-bar__panel {
+  padding-top: 0.55rem;
+}
+
+.catalog-bar__panel[hidden] {
+  display: none;
+}
+
+.catalog-colors {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.catalog-colors::-webkit-scrollbar {
+  display: none;
+}
+
+.catalog-colors > li {
+  flex-shrink: 0;
+}
+
+@media (min-width: 760px) {
+  .catalog-colors {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
 }
 
 /* Чип-лепесток: один угол острее остальных */
@@ -54,6 +319,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.2;
+  white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition:
@@ -61,6 +327,15 @@
     border-color 0.3s ease,
     color 0.3s ease,
     transform 0.3s var(--ease);
+}
+
+.chip--sm {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.chip--link {
+  text-decoration: none;
 }
 
 .chip:hover {
@@ -78,21 +353,17 @@
   border-radius: 999px 999px 999px 12px;
 }
 
-.filters__actions {
-  display: flex;
-  justify-content: flex-start;
-}
-
 .filters__reset {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   min-height: 44px;
-  padding: 0.4rem 0.2rem;
+  padding: 0.4rem 0.4rem;
   border: 0;
   background: none;
   color: var(--accent-text);
   font-weight: 700;
+  white-space: nowrap;
   cursor: pointer;
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
@@ -153,29 +424,46 @@
   --dot: #f8b996;
 }
 
+.color-dot--green {
+  --dot: #6f9a6b;
+}
+
 .color-dot--mixed {
   --dot: conic-gradient(#f29cbf, #f4d04e, #9fd0a0, #8a57c2, #c7324d, #f29cbf);
 }
 
 /* ---------- Каталог: список ---------- */
 .catalog__count {
-  margin-block: clamp(1.5rem, 4vw, 2.2rem) 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  margin-block: 1rem 0.9rem;
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3.4vw, 1.7rem);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 600;
   color: var(--heading);
 }
 
-.catalog__count-note {
+.catalog__count-reset {
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
 }
 
+/* Сетка: 2 колонки на телефоне, 3 на планшете, 4 на компьютере */
 .catalog__grid {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
 }
 
 .catalog__item {
@@ -189,27 +477,139 @@
 
 @media (min-width: 560px) {
   .catalog__grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
   }
 }
 
-@media (min-width: 940px) {
+@media (min-width: 760px) {
   .catalog__grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.9rem;
-  }
-}
-
-@media (min-width: 1100px) {
-  .catalog__grid--featured {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.4rem;
   }
 }
 
-.featured__more {
-  margin-top: clamp(1.5rem, 4vw, 2.5rem);
-  text-align: center;
+@media (min-width: 1100px) {
+  .catalog__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* ---------- Витрина на главной: вкладки и карусель ---------- */
+.section--tight {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.featured .section-heading {
+  margin-bottom: clamp(1.1rem, 3vw, 1.75rem);
+}
+
+.showcase__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.showcase__tabs {
+  flex: 0 1 auto;
+}
+
+.showcase__all {
+  margin-left: auto;
+}
+
+@media (max-width: 559px) {
+  .showcase__all {
+    order: 3;
+    margin-inline: auto;
+  }
+}
+
+.carousel {
+  position: relative;
+}
+
+.carousel__track {
+  display: grid;
+  grid-auto-flow: column;
+  /* на телефоне видно ~1,6 карточки: понятно, что ленту можно листать */
+  grid-auto-columns: 62%;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 2px;
+  scrollbar-width: none;
+  /* место под тень и подъём карточки при наведении */
+  padding: 8px 2px 18px;
+  margin: -8px -2px -18px;
+}
+
+.carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel__item {
+  scroll-snap-align: start;
+}
+
+.carousel__controls {
+  display: none;
+}
+
+@media (min-width: 560px) {
+  .carousel__track {
+    grid-auto-columns: calc((100% - 1.1rem * 2) / 2.6);
+    gap: 1.1rem;
+  }
+}
+
+@media (min-width: 760px) {
+  .carousel__track {
+    grid-auto-columns: calc((100% - 1.4rem * 2) / 3);
+    gap: 1.4rem;
+  }
+
+  .carousel__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .carousel__track {
+    grid-auto-columns: calc((100% - 1.5rem * 3) / 4);
+    gap: 1.5rem;
+  }
+}
+
+.carousel__button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--heading);
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.carousel__button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.carousel__button:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 /* ---------- Карточка товара ---------- */
@@ -397,4 +797,212 @@
 .product-card--out .btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+/* Метки «Хит», «Новинка», «−N%» в левом верхнем углу фото */
+.product-card__badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  max-width: calc(100% - 20px);
+}
+
+.product-card__flag {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px 999px 999px 8px;
+  background: var(--surface);
+  color: var(--accent-text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+  box-shadow: var(--shadow-sm);
+}
+
+.product-card__flag--new {
+  background: var(--green);
+  color: var(--on-green);
+}
+
+.product-card__flag--sale {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* «Нет в наличии» уступает место меткам: переносим её вниз справа */
+.product-card__badges ~ .product-card__badge {
+  top: auto;
+  bottom: 12px;
+  right: 12px;
+}
+
+.product-card__badges ~ .product-card__badge ~ .product-card__tag {
+  display: none;
+}
+
+.product-card__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
+}
+
+.product-card__old-price {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.product-card__label-short {
+  display: none;
+}
+
+/*
+ * Телефон: две колонки. Карточка упрощается — без описания и цвета, подпись кнопки
+ * короче, кнопки на всю ширину. Касание по-прежнему не меньше 44px.
+ */
+@media (max-width: 559px) {
+  .product-card {
+    --product-shape: 30px 16px 22px 16px / 28px 16px 22px 16px;
+    --product-media: 24px 10px 18px 10px / 22px 10px 18px 10px;
+    padding: 6px 6px 0;
+  }
+
+  .catalog__item:nth-child(n) .product-card {
+    --product-shape: 30px 16px 22px 16px / 28px 16px 22px 16px;
+    --product-media: 24px 10px 18px 10px / 22px 10px 18px 10px;
+  }
+
+  .product-card:hover {
+    transform: none;
+  }
+
+  .product-card__tag {
+    display: none;
+  }
+
+  .product-card__body {
+    gap: 0.3rem;
+    padding: 0.6rem 0.35rem 0.75rem;
+  }
+
+  .product-card__title {
+    font-size: 1.15rem;
+    line-height: 1.15;
+  }
+
+  .product-card__text,
+  .product-card__color {
+    display: none;
+  }
+
+  /* Название занимает переменную высоту — прижимаем цену и кнопки к низу карточки */
+  .product-card__title {
+    flex: 1;
+  }
+
+  .product-card__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.45rem;
+    margin-top: 0.15rem;
+  }
+
+  .product-card__price {
+    font-size: 1.3rem;
+  }
+
+  .product-card__old-price {
+    font-size: 0.78rem;
+  }
+
+  .product-card__actions {
+    gap: 0.35rem;
+  }
+
+  .product-card__action.btn {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .product-card__action .btn__petal {
+    display: none;
+  }
+
+  .product-card__whatsapp {
+    width: 44px;
+    height: 44px;
+  }
+
+  .product-card__label-full {
+    display: none;
+  }
+
+  .product-card__label-short {
+    display: inline;
+  }
+
+  .product-card__flag {
+    font-size: 0.66rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .product-card__badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+/* Карусель на главной на телефоне — карточки шире, им хватает места на полную версию цены */
+@media (max-width: 559px) {
+  .carousel__item .product-card__title {
+    font-size: 1.25rem;
+  }
+}
+
+/* ---------- Кнопка «Наверх» ---------- */
+.back-to-top {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50% 50% 50% 14px;
+  background: var(--surface);
+  color: var(--accent-text);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.35s var(--ease),
+    visibility 0.3s,
+    border-color 0.25s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.back-to-top:hover {
+  border-color: var(--accent);
+}
+
+.layout__main:focus {
+  outline: none;
 }

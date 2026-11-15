@@ -10,6 +10,7 @@ import ProductFormModal from '../../components/admin/ProductFormModal.jsx';
 import { useAdmin } from '../../context/AdminContext.jsx';
 import { PRODUCT_CATEGORIES } from '../../data/products';
 import { useAdminFormat } from '../../hooks/useAdminFormat';
+import { countMissingStarters } from '../../services/products';
 
 const ALL = 'all';
 
@@ -147,7 +148,9 @@ export default function AdminProductsPage() {
   };
 
   const isEmpty = productsStatus === 'ready' && products.length === 0;
-  const canSeed = productsStatus === 'ready' && (products.length === 0 || seedIncomplete);
+  // Кнопка видна, пока в Firestore нет части стартового каталога (например, новых позиций).
+  const missingStarters = productsStatus === 'ready' ? countMissingStarters(products) : 0;
+  const canSeed = productsStatus === 'ready' && (missingStarters > 0 || seedIncomplete);
 
   const resetFilters = () => {
     setQuery('');
@@ -177,7 +180,11 @@ export default function AdminProductsPage() {
             ) : (
               <DatabaseZap size={16} aria-hidden="true" />
             )}
-            {t(seeding ? 'admin.products.seeding' : 'admin.products.seed')}
+            {seeding
+              ? t('admin.products.seeding')
+              : products.length === 0
+                ? t('admin.products.seed')
+                : t('admin.products.seedMissing', { count: missingStarters })}
           </button>
         )}
         <Button

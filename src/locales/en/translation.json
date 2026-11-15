@@ -10,7 +10,11 @@
     "homeLink": "Azalia — back to home"
   },
   "common": {
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "breadcrumbs": "Breadcrumb",
+    "backToTop": "Back to top",
+    "carouselPrev": "Previous products",
+    "carouselNext": "Next products"
   },
   "nav": {
     "label": "Main navigation",
@@ -44,7 +48,8 @@
     "secondary": "Our services",
     "imageAlt": "A lush bouquet of garden roses in cream, powder-pink and lavender shades",
     "insetAlt": "White and pink peonies in close-up",
-    "badge": "Freshness in every petal"
+    "badge": "Freshness in every petal",
+    "quickLabel": "Catalogue sections"
   },
   "welcome": {
     "eyebrow": "Welcome",
@@ -101,15 +106,12 @@
     }
   },
   "catalog": {
-    "eyebrow": "Catalog",
     "title": "Flowers and bouquets",
-    "subtitle": "Pick a shade and your favourite flowers — we will show the bouquets that suit you.",
+    "subtitle": "Pick a section, a shade and an order — the bar above the list stays at hand while you scroll.",
     "filters": {
       "color": "Colour",
-      "category": "Category",
       "reset": "Reset filters",
-      "active_one": "{{count}} filter selected",
-      "active_other": "{{count}} filters selected"
+      "anyColor": "Any colour"
     },
     "colors": {
       "pink": "Pink",
@@ -119,30 +121,34 @@
       "purple": "Purple",
       "lilac": "Lilac",
       "peach": "Peach",
-      "mixed": "Multicoloured"
+      "mixed": "Multicoloured",
+      "green": "Green"
     },
     "categories": {
+      "author": "Signature bouquets",
       "roses": "Roses",
-      "peonies": "Peonies",
-      "tulips": "Tulips",
-      "daisies": "Daisies",
-      "lilies": "Lilies",
-      "orchids": "Orchids",
-      "author": "Signature bouquets"
+      "mono": "Single-flower bouquets",
+      "plants": "House plants",
+      "gifts": "Gifts"
     },
     "found_one": "{{count}} item found",
     "found_other": "{{count}} items found",
     "emptyTitle": "Nothing found",
-    "emptyText": "No flowers match the selected filters. Try another colour or category — or reset the filters.",
+    "emptyText": "There is nothing in this section in the selected colour. Try another section or colour — or reset the filters.",
     "price": "{{price}} KGS",
     "order": "Order",
     "orderLabel": "Order on WhatsApp: {{name}}",
     "orderMessage": "Hello! I would like to order “{{name}}” ({{price}}).",
     "featured": {
-      "eyebrow": "Catalog",
-      "title": "The bouquets people choose most",
-      "subtitle": "A few favourite arrangements from our studio. The full range is in the catalog.",
-      "link": "View the full catalog"
+      "eyebrow": "Showcase",
+      "title": "Choose without scrolling the whole site",
+      "link": "View the full catalog",
+      "tabsLabel": "Product collections",
+      "tabs": {
+        "hits": "Bestsellers",
+        "new": "New in",
+        "sale": "On sale"
+      }
     },
     "products": {
       "blushBouquet": {
@@ -228,12 +234,125 @@
       "pinkGerberas": {
         "name": "Pink Gerberas",
         "description": "A lush armful of pink and white gerberas — large, cheerful daisies."
+      },
+      "peachCloud": {
+        "name": "Peach Cloud",
+        "description": "An airy bouquet of spray roses, lisianthus and dianthus in peach and cream tones, wrapped in kraft paper."
+      },
+      "sunflowerCraft": {
+        "name": "Sunny Kraft",
+        "description": "A sunflower with meadow grasses and dried flowers in paper wrapping — a bright everyday bouquet."
+      },
+      "peonyRoses": {
+        "name": "Peony Roses",
+        "description": "Lush Austin peony roses in soft pink — 15 blooms with a garden scent."
+      },
+      "roseVase": {
+        "name": "Roses in a Vase",
+        "description": "A mix of garden and spray roses in a glass vase — a ready arrangement that needs no rearranging."
+      },
+      "sunflowers": {
+        "name": "Sunflowers",
+        "description": "A bouquet of 9 large sunflowers — a summer mood in any season."
+      },
+      "monstera": {
+        "name": "Monstera in a Pot",
+        "description": "Monstera deliciosa, 50–60 cm tall, in a white ceramic pot. Easy-going and fast-growing."
+      },
+      "ficusGinseng": {
+        "name": "Ficus Ginseng",
+        "description": "A bonsai ficus with sculptural roots in a light pot — a living gift for home or office."
+      },
+      "chlorophytum": {
+        "name": "Spider Plant",
+        "description": "A lush spider plant with slim striped leaves: purifies the air and forgives the odd missed watering."
+      },
+      "haworthia": {
+        "name": "Haworthia",
+        "description": "A compact succulent in a mint pot for a desk or windowsill."
+      },
+      "macarons": {
+        "name": "Macarons, box of 12",
+        "description": "Handmade French macarons: vanilla, raspberry, pistachio and salted caramel."
+      },
+      "chocolates": {
+        "name": "Chocolate Box",
+        "description": "Handmade Belgian chocolate sweets in a gift box, 16 pieces."
+      },
+      "balloons": {
+        "name": "Balloon Bunch",
+        "description": "Five pastel helium balloons with ribbons — add them to a bouquet for a celebration."
+      },
+      "candle": {
+        "name": "Scented Candle",
+        "description": "A soy candle in a glass jar scented with peony and white tea, about 40 hours of burning."
+      },
+      "brideBouquet": {
+        "name": "Bridal Bouquet",
+        "description": "A compact wedding bouquet of pink peonies, cream and spray roses tied with satin ribbon."
+      },
+      "eustomaBouquet": {
+        "name": "Garden Lisianthus",
+        "description": "A lush signature bouquet of pink lisianthus, spray roses, astrantia, gypsophila and green hydrangea."
+      },
+      "springVase": {
+        "name": "Spring Vase",
+        "description": "A bright arrangement of lilac and white tulips with raspberry roses in a white ceramic vase."
+      },
+      "pinkRosesWrap": {
+        "name": "9 Pink Roses",
+        "description": "Nine soft pink roses with cream edges in clear wrapping — a classic compliment."
+      },
+      "englishRoses": {
+        "name": "English Roses",
+        "description": "Fragrant peony-shaped garden roses in a ceramic vase — as if freshly cut from the garden."
+      },
+      "coralRoses": {
+        "name": "Coral Roses",
+        "description": "A bouquet of large coral-peach roses with velvety petals."
+      },
+      "palePeonies": {
+        "name": "Sarah Bernhardt Peonies",
+        "description": "Soft pink double peonies of the Sarah Bernhardt variety with a delicate scent and dark greenery."
+      },
+      "ranunculus": {
+        "name": "Ranunculus",
+        "description": "Pink and white ranunculus with layered petals — an elegant bouquet for any occasion."
+      },
+      "sprayChrysanthemums": {
+        "name": "Pink Chrysanthemums",
+        "description": "A light bouquet of pink daisy-like spray chrysanthemums with sunny centres."
+      },
+      "matricaria": {
+        "name": "Matricaria",
+        "description": "A lush armful of tiny matricaria daisies — a simple, summery and charming bouquet."
+      },
+      "pastelGerbera": {
+        "name": "Pastel Gerbera",
+        "description": "A soft pink gerbera with a green centre. Sold by the stem — build a bouquet of any size."
       }
     },
     "addToCart": "Add to cart",
     "addToCartLabel": "Add to cart: {{name}}",
     "inCart": "In cart: {{count}}",
-    "outOfStock": "Out of stock"
+    "outOfStock": "Out of stock",
+    "all": "All",
+    "sectionsLabel": "Catalogue sections",
+    "sort": {
+      "label": "Sort by",
+      "default": "Popular",
+      "priceAsc": "Price: low to high",
+      "priceDesc": "Price: high to low",
+      "new": "New first"
+    },
+    "badges": {
+      "hit": "Bestseller",
+      "new": "New",
+      "sale": "−{{percent}}%"
+    },
+    "oldPriceLabel": "Price before discount:",
+    "addToCartShort": "Add",
+    "inCartShort": "{{count}} pcs"
   },
   "cart": {
     "eyebrow": "Cart",
