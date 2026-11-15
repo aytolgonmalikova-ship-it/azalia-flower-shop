@@ -1,0 +1,259 @@
+/* ---------- Контакты ---------- */
+.contact__grid {
+  display: grid;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+.contact__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 1.9rem;
+}
+
+.contact__item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.contact__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50% 50% 50% 14px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.contact__icon--whatsapp {
+  background: color-mix(in srgb, var(--sage) 38%, transparent);
+  color: var(--green);
+}
+
+.contact__label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.contact__value {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--heading);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.contact__value:hover {
+  color: var(--accent-text);
+}
+
+.contact__whatsapp {
+  width: 100%;
+}
+
+.contact__hint {
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+@media (min-width: 900px) {
+  .contact__grid {
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 2rem;
+  }
+
+  .contact__info {
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+  }
+}
+
+/* ---------- Форма ---------- */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.contact-form__row {
+  display: grid;
+  gap: 1.15rem;
+}
+
+@media (min-width: 560px) {
+  .contact-form__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-form__service {
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.field__label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.field__required {
+  margin-left: 0.2rem;
+  color: var(--accent-text);
+}
+
+.field__control {
+  width: 100%;
+  min-height: 54px;
+  padding: 0.85rem 1.1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.5;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+textarea.field__control {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.field__control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
+.field__control:hover {
+  border-color: var(--rose);
+}
+
+.field__control:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.field__control:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Подсветка поля с ошибкой */
+.field--invalid .field__control {
+  border-color: var(--error);
+  background: var(--error-bg);
+}
+
+.field--invalid .field__control:focus {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--error) 24%, transparent);
+}
+
+.field__error {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--error);
+}
+
+.form-alert {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--error);
+  border-radius: var(--radius-sm);
+  background: var(--error-bg);
+  color: var(--text);
+}
+
+.form-alert svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--error);
+}
+
+.form-alert__title {
+  font-weight: 700;
+  color: var(--error);
+}
+
+.contact-form__submit {
+  align-self: stretch;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 560px) {
+  .contact-form__submit {
+    align-self: flex-start;
+  }
+}
+
+.contact-form__note {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.contact-form__note svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.form-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 0.5rem;
+  text-align: center;
+  animation: fade-up 0.7s var(--ease) both;
+}
+
+.form-result__icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--sage) 35%, transparent);
+  color: var(--success);
+}
+
+.form-result__title {
+  font-size: clamp(1.6rem, 4vw, 2rem);
+}
+
+.form-result__text {
+  max-width: 420px;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+}

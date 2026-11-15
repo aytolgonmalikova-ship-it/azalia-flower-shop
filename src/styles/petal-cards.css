@@ -1,0 +1,142 @@
+/*
+ * «Лепестковые» карточки.
+ * Вместо прямоугольников — мягкие асимметричные формы, собранные из разных радиусов углов.
+ * Четыре родственные формы чередуются, поэтому сетка выглядит живой, но единой.
+ * Текст не обрезается: форма задаётся только border-radius, а отступы больше изгиба углов.
+ */
+:root {
+  --petal-shape-1: 64px 26px 72px 26px / 56px 26px 62px 26px;
+  --petal-shape-2: 26px 68px 26px 76px / 26px 58px 26px 64px;
+  --petal-shape-3: 78px 34px 30px 58px / 66px 34px 30px 50px;
+  --petal-shape-4: 30px 74px 62px 30px / 30px 62px 54px 30px;
+}
+
+.feature,
+.value-card,
+.service-card,
+.card {
+  position: relative;
+  isolation: isolate;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--petal-shape, var(--petal-shape-1));
+  /* лёгкий объём: блик сверху, тёплая тень снизу */
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    inset 0 -22px 32px -26px var(--card-lilac),
+    var(--shadow-sm);
+}
+
+.feature:hover,
+.value-card:hover,
+.service-card:hover {
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    inset 0 -22px 32px -26px var(--card-lilac),
+    var(--shadow-lg);
+}
+
+.card {
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    inset 0 -22px 32px -26px var(--card-lilac),
+    var(--shadow);
+}
+
+/* Акварельные пятна внутри карточки повторяют её форму */
+.feature::before,
+.value-card::before,
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(46% 40% at 100% 0%, var(--card-blush), transparent 72%),
+    radial-gradient(42% 38% at 0% 100%, var(--card-lilac), transparent 72%);
+  pointer-events: none;
+}
+
+/* Маленький декоративный лепесток в свободном углу */
+.feature::after,
+.value-card::after,
+.card::after {
+  content: '';
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  z-index: -1;
+  width: 22px;
+  height: 30px;
+  border-radius: 96% 14% 92% 20% / 92% 16% 96% 22%;
+  background: linear-gradient(140deg, var(--rose), var(--lavender));
+  box-shadow: -15px 9px 0 -6px var(--lavender);
+  opacity: 0.42;
+  transform: rotate(24deg);
+  transition: transform 0.7s var(--ease-spring);
+  pointer-events: none;
+}
+
+.feature:hover::after,
+.value-card:hover::after {
+  transform: rotate(48deg) scale(1.08);
+}
+
+/* ---------- Чередование форм ---------- */
+.features > :nth-child(3n + 1),
+.values > :nth-child(4n + 1),
+.services__grid > li:nth-child(4n + 1) .service-card,
+.contact__info {
+  --petal-shape: var(--petal-shape-1);
+}
+
+.features > :nth-child(3n + 2),
+.values > :nth-child(4n + 2),
+.services__grid > li:nth-child(4n + 2) .service-card {
+  --petal-shape: var(--petal-shape-2);
+}
+
+.features > :nth-child(3n),
+.values > :nth-child(4n + 3),
+.services__grid > li:nth-child(4n) .service-card {
+  --petal-shape: var(--petal-shape-3);
+}
+
+.values > :nth-child(4n),
+.services__grid > li:nth-child(4n + 3) .service-card {
+  --petal-shape: var(--petal-shape-4);
+}
+
+/* Большая карточка формы: тот же характер, но спокойнее */
+.contact__form {
+  --petal-shape: 34px 84px 34px 84px / 34px 68px 34px 68px;
+}
+
+/* Там, где декоративный лепесток стоит у скруглённого угла, сдвигаем его внутрь */
+.features > :nth-child(3n + 2)::after,
+.values > :nth-child(4n + 2)::after,
+.values > :nth-child(4n)::after,
+.contact__form::after {
+  top: 26px;
+  right: 34px;
+}
+
+/* Иконки-лепестки внутри карточек тоже разной формы */
+.features > :nth-child(even) .feature__icon,
+.values > :nth-child(even) .value-card__icon {
+  border-radius: 50% 50% 14px 50%;
+}
+
+@media (max-width: 420px) {
+  :root {
+    --petal-shape-1: 52px 24px 58px 24px / 46px 24px 52px 24px;
+    --petal-shape-2: 24px 54px 24px 60px / 24px 48px 24px 54px;
+    --petal-shape-3: 60px 30px 26px 48px / 54px 30px 26px 42px;
+    --petal-shape-4: 26px 58px 50px 26px / 26px 52px 46px 26px;
+  }
+
+  .contact__form {
+    --petal-shape: 28px 60px 28px 60px / 28px 52px 28px 52px;
+  }
+}

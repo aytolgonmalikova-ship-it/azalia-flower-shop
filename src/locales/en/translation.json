@@ -1,0 +1,466 @@
+{
+  "meta": {
+    "title": "Azalia Flower Shop",
+    "description": "Azalia is a flower shop: delicate signature bouquets, custom bouquets and personalised ribbons."
+  },
+  "brand": {
+    "name": "Azalia",
+    "caption": "flower shop",
+    "full": "Azalia Flower Shop",
+    "homeLink": "Azalia — back to home"
+  },
+  "common": {
+    "skipToContent": "Skip to content"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Home",
+    "about": "About Us",
+    "catalog": "Catalog",
+    "services": "Services",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "header": {
+    "cta": "Choose a bouquet"
+  },
+  "lang": {
+    "label": "Site language",
+    "ky": "Кыргызча",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  },
+  "hero": {
+    "eyebrow": "Azalia Flower Shop",
+    "titleStart": "Flowers that",
+    "titleAccent": "speak of love",
+    "subtitle": "Every bouquet is a small story about tenderness, love and beauty. We gather it from fresh flowers especially for someone dear to you.",
+    "cta": "Choose a bouquet",
+    "secondary": "Our services",
+    "imageAlt": "A lush bouquet of garden roses in cream, powder-pink and lavender shades",
+    "insetAlt": "White and pink peonies in close-up",
+    "badge": "Freshness in every petal"
+  },
+  "welcome": {
+    "eyebrow": "Welcome",
+    "title": "A place where flowers become emotions",
+    "text": "Azalia is a place where flowers become emotions. We create delicate bouquets that speak of love, care and the most sincere feelings.",
+    "link": "More about us",
+    "imageAlt": "A raspberry-pink peony in a glass vase beside a book and a cup",
+    "features": {
+      "fresh": {
+        "title": "Fresh flowers",
+        "text": "We select every flower with care so your bouquet brings joy for as long as possible."
+      },
+      "author": {
+        "title": "Signature bouquets",
+        "text": "We combine shades and textures so that each bouquet is one of a kind."
+      },
+      "care": {
+        "title": "Attention to detail",
+        "text": "Wrapping, ribbon and card — we think everything through to the final touch."
+      }
+    }
+  },
+  "about": {
+    "eyebrow": "About us",
+    "title": "We love flowers — and it shows in every bouquet",
+    "lead": "Azalia grew out of a simple love of flowers. To us a bouquet is not a product but a way to say what matters most without words, so we arrange every composition by hand and with heart.",
+    "quote": "Flowers say what is hard to put into words.",
+    "values": {
+      "love": {
+        "title": "Love of flowers",
+        "text": "We work with flowers every day and never stop admiring them. That love is where each of our bouquets begins."
+      },
+      "individual": {
+        "title": "A personal approach",
+        "text": "We listen carefully to who the bouquet is for and what the occasion is, then choose flowers, shades and mood just for you."
+      },
+      "author": {
+        "title": "Signature bouquets",
+        "text": "We never work from a template: every composition is created by a florist as a small work of art."
+      },
+      "quality": {
+        "title": "Quality and freshness",
+        "text": "We use only fresh flowers and look after them gently so your bouquet keeps its beauty for longer."
+      },
+      "care": {
+        "title": "Care for every detail",
+        "text": "From the shape of the bouquet to the ribbon and wrapping — every little thing matters, because the impression is made of them."
+      }
+    },
+    "images": {
+      "main": "A woman holding a bouquet of pink and white tulips",
+      "roses": "Peach-pink roses in close-up",
+      "gerbera": "A soft pink gerbera on a light background"
+    }
+  },
+  "catalog": {
+    "eyebrow": "Catalog",
+    "title": "Flowers and bouquets",
+    "subtitle": "Pick a shade and your favourite flowers — we will show the bouquets that suit you.",
+    "filters": {
+      "color": "Colour",
+      "category": "Category",
+      "reset": "Reset filters",
+      "active_one": "{{count}} filter selected",
+      "active_other": "{{count}} filters selected"
+    },
+    "colors": {
+      "pink": "Pink",
+      "white": "White",
+      "red": "Red",
+      "yellow": "Yellow",
+      "purple": "Purple",
+      "lilac": "Lilac",
+      "peach": "Peach",
+      "mixed": "Multicoloured"
+    },
+    "categories": {
+      "roses": "Roses",
+      "peonies": "Peonies",
+      "tulips": "Tulips",
+      "daisies": "Daisies",
+      "lilies": "Lilies",
+      "orchids": "Orchids",
+      "author": "Signature bouquets"
+    },
+    "found_one": "{{count}} item found",
+    "found_other": "{{count}} items found",
+    "emptyTitle": "Nothing found",
+    "emptyText": "No flowers match the selected filters. Try another colour or category — or reset the filters.",
+    "price": "{{price}} KGS",
+    "order": "Order",
+    "orderLabel": "Order on WhatsApp: {{name}}",
+    "orderMessage": "Hello! I would like to order “{{name}}” ({{price}}).",
+    "featured": {
+      "eyebrow": "Catalog",
+      "title": "The bouquets people choose most",
+      "subtitle": "A few favourite arrangements from our studio. The full range is in the catalog.",
+      "link": "View the full catalog"
+    },
+    "products": {
+      "blushBouquet": {
+        "name": "Powder Cloud",
+        "description": "A round signature bouquet of garden and spray roses in powder-pink and milky shades."
+      },
+      "pinkPeonies": {
+        "name": "Pink Peonies",
+        "description": "An armful of lush pink peonies with buds and fresh greenery."
+      },
+      "wrappedBouquet": {
+        "name": "Peach Dawn",
+        "description": "A signature bouquet of peach roses and cream carnations with fern, wrapped in kraft paper."
+      },
+      "blushRoses": {
+        "name": "Blush Roses",
+        "description": "A bouquet of white-and-pink roses with velvety silver foliage."
+      },
+      "lilacBouquet": {
+        "name": "Lilac Evening",
+        "description": "A fragrant arrangement of purple and white lilac in a vase."
+      },
+      "whitePeonies": {
+        "name": "White Peonies",
+        "description": "An arrangement of white and soft pink peonies in a white vase."
+      },
+      "redRoses": {
+        "name": "Red Roses",
+        "description": "A bouquet of velvety scarlet roses — the classic declaration of love."
+      },
+      "plumTulips": {
+        "name": "Plum Tulips",
+        "description": "A bouquet of purple and raspberry tulips in deep, rich shades."
+      },
+      "whiteOrchid": {
+        "name": "White Orchid",
+        "description": "A spray of snow-white phalaenopsis — an elegant gift that blooms for a long time."
+      },
+      "gardenBouquet": {
+        "name": "Garden in Bloom",
+        "description": "A vivid signature bouquet of roses and seasonal flowers in pink, cream and lime shades."
+      },
+      "creamRoses": {
+        "name": "Cream Roses",
+        "description": "A bouquet of cream and dusty-pink roses with airy grasses."
+      },
+      "whiteCallas": {
+        "name": "White Calla Lilies",
+        "description": "A minimalist bouquet of white calla lilies — refined, graceful classics."
+      },
+      "pinkTulips": {
+        "name": "Pink Tulips",
+        "description": "Soft pink tulips in full bloom — a spring mood at any time of year."
+      },
+      "whiteDaisies": {
+        "name": "Daisy Morning",
+        "description": "A light bouquet of white daisies in a glass vase."
+      },
+      "peachRoses": {
+        "name": "Peach Roses",
+        "description": "Spray roses in a warm peach-orange shade."
+      },
+      "burgundyBouquet": {
+        "name": "Wine Velvet",
+        "description": "A signature bouquet of burgundy and pink carnations with a cloud of gypsophila."
+      },
+      "lilacDaisies": {
+        "name": "Lilac Daisies",
+        "description": "A bouquet of lilac Michaelmas daisies — delicate autumn blooms."
+      },
+      "yellowTulips": {
+        "name": "Sunny Tulips",
+        "description": "A bouquet of bright yellow tulips with lush green leaves."
+      },
+      "purpleOrchid": {
+        "name": "Purple Orchid",
+        "description": "An orchid spray in a deep purple colour — a bright exotic accent."
+      },
+      "mixedTulips": {
+        "name": "Spring Mix",
+        "description": "A large bouquet of multicoloured tulips: white, pink and orange."
+      },
+      "pinkGerberas": {
+        "name": "Pink Gerberas",
+        "description": "A lush armful of pink and white gerberas — large, cheerful daisies."
+      }
+    },
+    "addToCart": "Add to cart",
+    "addToCartLabel": "Add to cart: {{name}}",
+    "inCart": "In cart: {{count}}",
+    "outOfStock": "Out of stock"
+  },
+  "cart": {
+    "eyebrow": "Cart",
+    "title": "Cart",
+    "subtitle": "Check your bouquets and leave your contact details — we will get in touch to confirm the order.",
+    "headerLabel": "Cart, items: {{count}}",
+    "itemsTitle": "Your order",
+    "emptyTitle": "Your cart is empty",
+    "emptyText": "Take a look at the catalogue — your bouquet may already be waiting there.",
+    "toCatalog": "Go to catalogue",
+    "removedProduct": "This product is no longer sold",
+    "unavailable": "Out of stock — will not be included in the order",
+    "unavailableNote": "Some products are out of stock right now. They will not be included in the order — you can remove them from the cart.",
+    "quantityLabel": "Quantity: {{name}}",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "remove": "Remove",
+    "removeLabel": "Remove from cart: {{name}}",
+    "total": "Total",
+    "subtotal": "Items",
+    "deliveryCost": "Delivery",
+    "pickupCost": "Pickup",
+    "free": "Free",
+    "success": {
+      "title": "Order received!",
+      "text": "Your order number is {{number}}. We will contact you shortly to confirm the details and delivery time."
+    },
+    "form": {
+      "title": "Checkout",
+      "name": "Your name",
+      "namePlaceholder": "How should we address you",
+      "phone": "Phone",
+      "deliveryType": "How to receive",
+      "delivery": "Courier delivery",
+      "deliveryHint": "We bring it to your address",
+      "pickup": "Pickup",
+      "pickupHint": "Collect the bouquet at the shop",
+      "pickupNote": "Collect your order at our shop. We will confirm the address and a convenient time by phone.",
+      "address": "Delivery address",
+      "addressPlaceholder": "Street, building, flat",
+      "comment": "Order comment",
+      "commentPlaceholder": "Delivery time, card message, wishes",
+      "submit": "Place order · {{total}}",
+      "submitting": "Sending order…",
+      "errorTitle": "Could not place the order",
+      "errorText": "Check your internet connection and try again. If the error persists, message us on WhatsApp.",
+      "errors": {
+        "nameRequired": "Enter your name",
+        "nameShort": "The name must be at least {{min}} characters",
+        "phoneRequired": "Enter your phone number",
+        "phoneInvalid": "Enter the full phone number",
+        "addressRequired": "Enter a delivery address",
+        "addressShort": "The address must be at least {{min}} characters"
+      }
+    }
+  },
+  "services": {
+    "eyebrow": "Our services",
+    "title": "Bouquets for your special moments",
+    "subtitle": "Tell us what you would like to give — and we will turn it into flowers.",
+    "order": "Order this service",
+    "loading": "Loading services…",
+    "errorTitle": "We couldn't load the services",
+    "errorText": "Please check your internet connection and try again.",
+    "retry": "Try again",
+    "emptyTitle": "Services are coming soon",
+    "emptyText": "The list of services is empty right now. Message us and we will tell you everything personally.",
+    "items": {
+      "festive": {
+        "title": "Festive bouquets",
+        "description": "We arrange delicate, beautiful bouquets for any celebration, event or special occasion.",
+        "imageAlt": "A lush hand-held bouquet of pink lisianthus and roses"
+      },
+      "custom": {
+        "title": "Custom bouquets",
+        "description": "We create individual bouquets based on the client's wishes, preferences and budget.",
+        "imageAlt": "Soft pink flowers in a glass vase beside a silver cup"
+      },
+      "ribbons": {
+        "title": "Personalised ribbons",
+        "description": "We make beautiful personalised ribbons for bouquets with custom inscriptions.",
+        "imageAlt": "A bouquet of peonies and roses tied with a satin ribbon"
+      },
+      "choice": {
+        "title": "Bouquets of your choice",
+        "description": "We arrange bouquets from the flowers the client picks themselves.",
+        "imageAlt": "Pink and white ranunculus flowers on a wooden tub"
+      }
+    }
+  },
+  "cta": {
+    "title": "Let's create your bouquet",
+    "text": "Message us — we'll help you choose the flowers, shades and wrapping for your occasion.",
+    "button": "Send a request"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Tell us what bouquet you have in mind",
+    "subtitle": "Leave a request or message us on WhatsApp — we'll reply and help you choose.",
+    "infoTitle": "Get in touch",
+    "phoneLabel": "Phone",
+    "whatsappLabel": "WhatsApp",
+    "whatsappButton": "Message us on WhatsApp",
+    "whatsappHint": "The fastest way to reach us — the chat opens in a new tab.",
+    "form": {
+      "title": "Contact form",
+      "name": "Name",
+      "namePlaceholder": "How should we address you",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "phone": "Phone",
+      "message": "Message",
+      "messagePlaceholder": "Tell us about the occasion, favourite flowers and wishes",
+      "required": "required field",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "demoNote": "This is a demo submission: no server is connected yet, so the message is not delivered anywhere.",
+      "selectedService": "Selected service: {{service}}",
+      "successTitle": "Thank you! Your message was sent",
+      "successText": "The form worked in demo mode. To be sure you reach us, please message us on WhatsApp.",
+      "sendAnother": "Send another one",
+      "errorTitle": "We couldn't send your message",
+      "errorText": "Please check your internet connection and try again, or message us on WhatsApp.",
+      "errors": {
+        "nameRequired": "Please enter your name",
+        "nameShort": "The name must be at least {{min}} characters long",
+        "emailRequired": "Please enter your email",
+        "emailInvalid": "Enter a valid email, e.g. name@example.com",
+        "phoneRequired": "Please enter your phone number",
+        "phoneInvalid": "Enter a valid number, e.g. +996 000 00 00 00",
+        "messageRequired": "Please write a message",
+        "messageShort": "The message must be at least {{min}} characters long"
+      }
+    }
+  },
+  "footer": {
+    "description": "Delicate signature bouquets that speak of love, care and the most sincere feelings.",
+    "navTitle": "Navigation",
+    "contactsTitle": "Contact",
+    "socialTitle": "Follow us",
+    "socialDemo": "Social media links are for demonstration only.",
+    "instagram": "Instagram (demo link)",
+    "telegram": "Telegram (demo link)",
+    "whatsapp": "Message us on WhatsApp",
+    "rights": "© {{year}} Azalia Flower Shop. All rights reserved."
+  },
+  "auth": {
+    "checking": "Checking sign-in…",
+    "tabsLabel": "Sign in or sign up",
+    "tabs": {
+      "login": "Sign in",
+      "register": "Sign up"
+    },
+    "header": {
+      "signIn": "Sign in",
+      "account": "Account",
+      "adminPanel": "Admin panel",
+      "signOut": "Sign out",
+      "menuLabel": "Account menu: {{name}}"
+    },
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Sign in to see your profile and orders.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "errorTitle": "Could not sign in",
+      "switchText": "No account yet?",
+      "switchAction": "Sign up"
+    },
+    "register": {
+      "title": "Create an account",
+      "subtitle": "It takes less than a minute.",
+      "submit": "Sign up",
+      "submitting": "Creating account…",
+      "errorTitle": "Could not sign up",
+      "switchText": "Already have an account?",
+      "switchAction": "Sign in"
+    },
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "How should we address you",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Your password",
+      "newPasswordPlaceholder": "At least {{min}} characters"
+    },
+    "errors": {
+      "passwordRequired": "Enter your password",
+      "weakPassword": "The password must be at least {{min}} characters long",
+      "emailInUse": "This email is already registered. Sign in or use another address.",
+      "emailInvalid": "Enter a valid email, e.g. name@example.com",
+      "invalid": "Wrong email or password.",
+      "disabled": "This account has been disabled. Please contact the shop.",
+      "tooMany": "Too many attempts. Wait a few minutes and try again.",
+      "network": "No internet connection. Check it and try again.",
+      "notEnabled": "Email and password sign-in is not enabled in the Firebase settings.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "account": {
+    "eyebrow": "My account",
+    "title": "My account",
+    "greeting": "Hello, {{name}}!",
+    "signOut": "Sign out",
+    "adminPanel": "Admin panel",
+    "profile": {
+      "title": "Profile",
+      "name": "Name",
+      "noName": "Not set",
+      "email": "Email",
+      "uid": "User ID (UID)",
+      "copy": "Copy ID",
+      "copied": "Copied",
+      "copyFailed": "Could not copy. Select the ID and copy it manually.",
+      "uidHint": "For shop staff: send this ID to the main administrator to get access to the control panel."
+    },
+    "orders": {
+      "title": "My orders",
+      "emptyTitle": "No orders yet",
+      "emptyText": "Your order history will appear here. Meanwhile, take a look at the catalog — your bouquet may already be waiting.",
+      "toCatalog": "Go to the catalog"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "It seems this garden path leads nowhere. Shall we go back to the flowers?",
+    "back": "Back to home"
+  }
+}

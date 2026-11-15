@@ -1,0 +1,144 @@
+/* ---------- Светлая тема: пудрово-розовый, лавандовый, сиреневый ---------- */
+:root {
+  color-scheme: light;
+
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Нежный цветочный сад: пудрово-розовый, лавандовый, сиреневый */
+  --bg: #f7e8f1;
+  --bg-base: linear-gradient(160deg, #fbe3ec 0%, #f6e4f3 34%, #eee3f8 68%, #e7e2fa 100%);
+  --bg-glow-1: rgba(246, 178, 208, 0.5);
+  --bg-glow-2: rgba(200, 180, 240, 0.48);
+  --bg-glow-3: rgba(228, 188, 236, 0.5);
+  --bg-glow-4: rgba(255, 214, 226, 0.55);
+  --tint: rgba(231, 212, 245, 0.6);
+  --surface: #fff8fc;
+  --surface-2: #f3e0f0;
+  --card-bg: linear-gradient(155deg, #fffafd 0%, #fbf0f8 55%, #f4e9fa 100%);
+  --card-highlight: rgba(255, 255, 255, 0.85);
+  --card-blush: rgba(240, 169, 198, 0.3);
+  --card-lilac: rgba(196, 174, 238, 0.3);
+  --border: #ead2e5;
+  --border-strong: #d3b5d4;
+
+  --text: #4a3848;
+  --text-muted: #6b586c;
+  --heading: #3a2739;
+
+  --accent: #a8527a;
+  --accent-hover: #934268;
+  --accent-text: #92446b;
+  --on-accent: #ffffff;
+  --accent-soft: #f4d4e5;
+  --rose: #dc9dbd;
+  --peach: #f6d2c4;
+  --lavender: #c9b6ec;
+  --sage: #a9bda4;
+  --beige: #dcc8ae;
+  --green: #557257;
+  --green-hover: #466148;
+  --on-green: #ffffff;
+
+  --error: #b03a3a;
+  --error-bg: #fbeceb;
+  --success: #4b7350;
+  --focus: #a8527a;
+
+  --header-bg: rgba(248, 232, 242, 0.86);
+  --footer-bg: #eedbef;
+  --cta-bg: linear-gradient(135deg, #fad9e7 0%, #f0dcf5 52%, #e2ddfa 100%);
+  --image-filter: none;
+
+  --petal-a: #f2a7c6;
+  --petal-b: #c9b2ee;
+  --petal-c: #e7bceb;
+  --petal-light: rgba(255, 255, 255, 0.75);
+  --petal-opacity: 0.68;
+
+  --shadow-sm: 0 6px 18px -10px rgba(132, 84, 138, 0.32);
+  --shadow: 0 22px 46px -24px rgba(132, 84, 138, 0.4);
+  --shadow-lg: 0 34px 70px -30px rgba(132, 84, 138, 0.46);
+
+  --radius-sm: 16px;
+  --radius: 26px;
+  --radius-lg: 36px;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  --header-height: 68px;
+  --container: 1180px;
+  --gutter: 20px;
+}
+
+/* ---------- Тёмная тема: глубокий сливовый, приглушённые цветочные оттенки ---------- */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #1d1420;
+  --bg-base: none;
+  --bg-glow-4: transparent;
+  --card-bg: linear-gradient(155deg, #2d2031 0%, #2a1e2e 55%, #2b2033 100%);
+  --card-highlight: rgba(255, 255, 255, 0.05);
+  --card-blush: rgba(201, 138, 155, 0.14);
+  --card-lilac: rgba(140, 110, 170, 0.16);
+  --lavender: #8f7bb5;
+  --petal-light: rgba(255, 255, 255, 0.22);
+  --bg-glow-1: rgba(201, 138, 155, 0.16);
+  --bg-glow-2: rgba(126, 86, 128, 0.22);
+  --bg-glow-3: rgba(143, 168, 140, 0.1);
+  --tint: rgba(53, 38, 58, 0.55);
+  --surface: #2a1e2e;
+  --surface-2: #35263a;
+  --border: #43324a;
+  --border-strong: #5b4662;
+
+  --text: #eee2e1;
+  --text-muted: #c4b0b8;
+  --heading: #f9eeeb;
+
+  --accent: #e3a3b3;
+  --accent-hover: #efbac6;
+  --accent-text: #edb4c1;
+  --on-accent: #2b1722;
+  --accent-soft: #4d3242;
+  --rose: #b97a8b;
+  --peach: #d9ae98;
+  --sage: #8fa88c;
+  --beige: #8c7a6a;
+  --green: #a9c4a5;
+  --green-hover: #bcd4b8;
+  --on-green: #17251a;
+
+  --error: #f2a59e;
+  --error-bg: #432630;
+  --success: #a9d1a9;
+  --focus: #efbac6;
+
+  --header-bg: rgba(29, 20, 32, 0.86);
+  --footer-bg: #171019;
+  --cta-bg: linear-gradient(135deg, #3a2638 0%, #33243a 55%, #2a2a30 100%);
+  --image-filter: brightness(0.92) saturate(0.95);
+
+  --petal-a: #c98a9b;
+  --petal-b: #d7a48f;
+  --petal-c: #a8809f;
+  --petal-opacity: 0.4;
+
+  --shadow-sm: 0 6px 18px -10px rgba(0, 0, 0, 0.6);
+  --shadow: 0 22px 46px -24px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 34px 70px -30px rgba(0, 0, 0, 0.8);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --header-height: 80px;
+  }
+}

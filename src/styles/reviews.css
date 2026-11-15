@@ -1,0 +1,235 @@
+/* ---------- Отзывы на главной странице ---------- */
+.reviews__grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 700px) {
+  .reviews__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .reviews__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Лепестковая карточка — та же семья форм, что у остальных карточек сайта */
+.review-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  margin: 0;
+  padding: clamp(1.6rem, 4vw, 2.1rem);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--petal-shape, var(--petal-shape-1));
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    inset 0 -22px 32px -26px var(--card-lilac),
+    var(--shadow-sm);
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s ease;
+}
+
+.reviews__grid > :nth-child(3n + 2) .review-card {
+  --petal-shape: var(--petal-shape-2);
+}
+
+.reviews__grid > :nth-child(3n) .review-card {
+  --petal-shape: var(--petal-shape-3);
+}
+
+.review-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(46% 40% at 100% 0%, var(--card-blush), transparent 72%),
+    radial-gradient(42% 38% at 0% 100%, var(--card-lilac), transparent 72%);
+  pointer-events: none;
+}
+
+/* Декоративная кавычка в углу */
+.review-card::after {
+  content: '”';
+  position: absolute;
+  top: 0.4rem;
+  right: 1.9rem;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-size: 6.5rem;
+  line-height: 1;
+  color: var(--rose);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    inset 0 -22px 32px -26px var(--card-lilac),
+    var(--shadow-lg);
+}
+
+.review-card__text {
+  flex: 1;
+  margin: 0;
+  font-size: 1.04rem;
+  color: var(--text);
+}
+
+.review-card__author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.review-card__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50% 50% 50% 14px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.review-card__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--heading);
+}
+
+.review-card__date {
+  display: block;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Звёзды ---------- */
+.rating-stars {
+  --star: #c9853a;
+
+  display: inline-flex;
+  gap: 3px;
+  color: var(--border-strong);
+}
+
+:root[data-theme='dark'] .rating-stars {
+  --star: #e3b074;
+}
+
+.rating-stars .is-filled {
+  color: var(--star);
+  fill: currentColor;
+}
+
+.rating-stars--input {
+  gap: 0;
+}
+
+.rating-stars__option {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.rating-stars__option:hover {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+.rating-stars__option:has(:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+}
+
+/* ---------- Загрузка ---------- */
+.reviews__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 8rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Кнопка и форма отзыва ---------- */
+.reviews__more,
+.reviews__actions {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.reviews__more-button {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reviews__form {
+  --petal-shape: 34px 84px 34px 84px / 34px 68px 34px 68px;
+
+  max-width: 720px;
+  margin: clamp(2rem, 5vw, 3rem) auto 0;
+  animation: fade-up 0.6s var(--ease) both;
+}
+
+.review-form__rating {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.review-form__rating .field__label {
+  padding: 0;
+}
+
+.review-form__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 560px) {
+  .review-form__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 420px) {
+  .reviews__form {
+    --petal-shape: 28px 60px 28px 60px / 28px 52px 28px 52px;
+  }
+}

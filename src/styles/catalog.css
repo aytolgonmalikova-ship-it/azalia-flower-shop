@@ -1,0 +1,400 @@
+/* ---------- Каталог: фильтры ---------- */
+.filters {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: 1.4rem;
+  padding: clamp(1.4rem, 3.6vw, 2.2rem) clamp(1.2rem, 3.6vw, 2.4rem);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 34px 78px 34px 78px / 34px 62px 34px 62px;
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    var(--shadow-sm);
+}
+
+.filters::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(40% 60% at 100% 0%, var(--card-blush), transparent 72%),
+    radial-gradient(36% 56% at 0% 100%, var(--card-lilac), transparent 72%);
+  pointer-events: none;
+}
+
+.filters__title {
+  margin-bottom: 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.filters__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+/* Чип-лепесток: один угол острее остальных */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.45rem 1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 999px 999px 999px 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.chip.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.chip:focus-visible {
+  border-radius: 999px 999px 999px 12px;
+}
+
+.filters__actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.filters__reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.4rem 0.2rem;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 5px;
+  transition: opacity 0.3s ease;
+}
+
+.filters__reset svg {
+  transition: transform 0.5s var(--ease);
+}
+
+.filters__reset:hover:not(:disabled) svg {
+  transform: rotate(-180deg);
+}
+
+.filters__reset:disabled {
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Цветные точки в фильтре и карточке */
+.color-dot {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgba(90, 60, 90, 0.22);
+  border-radius: 50%;
+  background: var(--dot, #ccc);
+}
+
+.color-dot--pink {
+  --dot: #f29cbf;
+}
+
+.color-dot--white {
+  --dot: #ffffff;
+}
+
+.color-dot--red {
+  --dot: #c7324d;
+}
+
+.color-dot--yellow {
+  --dot: #f4d04e;
+}
+
+.color-dot--purple {
+  --dot: #8a57c2;
+}
+
+.color-dot--lilac {
+  --dot: #cdaeea;
+}
+
+.color-dot--peach {
+  --dot: #f8b996;
+}
+
+.color-dot--mixed {
+  --dot: conic-gradient(#f29cbf, #f4d04e, #9fd0a0, #8a57c2, #c7324d, #f29cbf);
+}
+
+/* ---------- Каталог: список ---------- */
+.catalog__count {
+  margin-block: clamp(1.5rem, 4vw, 2.2rem) 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.4vw, 1.7rem);
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.catalog__count-note {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.catalog__grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.catalog__item {
+  display: flex;
+  min-width: 0;
+}
+
+.catalog .catalog__item {
+  animation: fade-up 0.6s var(--ease) both;
+}
+
+@media (min-width: 560px) {
+  .catalog__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 940px) {
+  .catalog__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.9rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .catalog__grid--featured {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4rem;
+  }
+}
+
+.featured__more {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+/* ---------- Карточка товара ---------- */
+/*
+ * Форма мягче, чем у информационных карточек: фотография вложена в карточку с отступом,
+ * поэтому скруглённые углы ничего не срезают по краям кадра.
+ */
+.product-card {
+  --product-shape: 60px 28px 34px 28px / 54px 28px 34px 28px;
+  --product-media: 50px 18px 46px 18px / 44px 18px 42px 18px;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px 10px 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--product-shape);
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    inset 0 -22px 32px -26px var(--card-lilac),
+    var(--shadow-sm);
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
+}
+
+.catalog__item:nth-child(3n + 2) .product-card {
+  --product-shape: 28px 60px 28px 34px / 28px 54px 28px 34px;
+  --product-media: 18px 50px 46px 18px / 18px 44px 42px 18px;
+}
+
+.catalog__item:nth-child(3n) .product-card {
+  --product-shape: 46px 46px 58px 28px / 42px 42px 50px 28px;
+  --product-media: 36px 36px 48px 18px / 32px 32px 42px 18px;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    inset 0 -22px 32px -26px var(--card-lilac),
+    var(--shadow-lg);
+}
+
+.product-card__media {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--product-media);
+  background: var(--surface-2);
+}
+
+.product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+
+.product-card:hover .product-card__media img {
+  transform: scale(1.05);
+}
+
+.product-card__tag {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  max-width: calc(100% - 24px);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px 999px 999px 10px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  color: var(--accent-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.product-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 0.9rem 1.5rem;
+}
+
+.product-card__title {
+  font-size: clamp(1.45rem, 3vw, 1.65rem);
+}
+
+.product-card__text {
+  flex: 1;
+  font-size: 0.96rem;
+  color: var(--text-muted);
+}
+
+.product-card__color {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.product-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-top: 0.5rem;
+}
+
+.product-card__price {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--heading);
+  white-space: nowrap;
+}
+
+/* Действия в карточке: «В корзину» и быстрый заказ в WhatsApp */
+.product-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.product-card__whatsapp {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--green);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s var(--ease);
+}
+
+.product-card__whatsapp:hover {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--sage) 30%, var(--surface));
+  transform: translateY(-1px);
+}
+
+.product-card__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--border-strong);
+}
+
+/* Нет в наличии: метка на фото, приглушённая фотография, заказ недоступен */
+.product-card__badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  max-width: calc(100% - 24px);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px 999px 10px 999px;
+  background: var(--heading);
+  color: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.product-card--out .product-card__media img {
+  filter: grayscale(0.55);
+  opacity: 0.72;
+}
+
+.product-card--out .product-card__price {
+  color: var(--text-muted);
+}
+
+.product-card--out .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

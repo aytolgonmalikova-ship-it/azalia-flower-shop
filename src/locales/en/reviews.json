@@ -1,0 +1,37 @@
+{
+  "eyebrow": "Reviews",
+  "title": "What our customers say",
+  "subtitle": "Kind words from people who have given and received Azalia bouquets.",
+  "ratingLabel": "Rated {{rating}} out of 5",
+  "emptyTitle": "No reviews yet",
+  "emptyText": "Be the first to share your impression of our shop.",
+  "showAll": "Show all reviews",
+  "leave": "Leave a review",
+  "form": {
+    "title": "Your review",
+    "name": "Name",
+    "namePlaceholder": "How should we introduce you",
+    "rating": "Rating",
+    "ratingOption_one": "{{count}} star",
+    "ratingOption_other": "{{count}} stars",
+    "text": "Review",
+    "textPlaceholder": "Tell us what you liked: the bouquet, the wrapping, the delivery",
+    "submit": "Send review",
+    "cancel": "Cancel",
+    "note": "Your review will appear on the site after an administrator checks it.",
+    "successTitle": "Thank you for your review!",
+    "successText": "We have received your review. It will appear on the site after an administrator checks it.",
+    "sendAnother": "Leave another one",
+    "errors": {
+      "textRequired": "Write a few words about your purchase",
+      "textShort": "The review must be at least {{min}} characters long"
+    },
+    "sending": "Sending…",
+    "errorTitle": "Could not send the review",
+    "errorText": "Check your internet connection and try again."
+  },
+  "loading": "Loading reviews…",
+  "errorTitle": "Could not load reviews",
+  "errorText": "Check your internet connection and try again.",
+  "retry": "Try again"
+}

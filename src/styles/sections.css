@@ -1,0 +1,478 @@
+/* ---------- Hero ---------- */
+/*
+ * Телефон и планшет: текст, под ним фотография на всю ширину контента.
+ * Компьютер: текст слева, фотография занимает всю правую половину блока
+ * (с небольшим отступом от краёв, чтобы были видны скруглённые углы), без рамок и наложений.
+ */
+.hero {
+  position: relative;
+  padding-top: clamp(2rem, 6vw, 4.5rem);
+}
+
+.hero__content > * {
+  animation: fade-up 0.9s var(--ease) both;
+}
+
+.hero__content > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.hero__content > :nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.hero__content > :nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.hero__title {
+  margin-top: 1rem;
+  font-size: clamp(2.7rem, 9.5vw, 5rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+.hero__title em {
+  display: block;
+  font-style: italic;
+  color: var(--accent-text);
+}
+
+.hero__subtitle {
+  max-width: 520px;
+  margin-top: 1.4rem;
+  font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+  color: var(--text-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem 1rem;
+  margin-top: 2.1rem;
+}
+
+.hero__visual {
+  margin-top: clamp(2.5rem, 7vw, 3.5rem);
+  aspect-ratio: 1;
+  max-height: 78vh;
+  width: calc(100% - var(--gutter) * 2);
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  animation: hero-photo 1.2s var(--ease) 0.15s both;
+}
+
+.hero__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 34% 50%;
+}
+
+@keyframes hero-photo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 640px) {
+  .hero__visual {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: clamp(580px, calc(100vh - var(--header-height)), 920px);
+    padding-block: 3.5rem;
+  }
+
+  /* Текст живёт только в левой половине и не может зайти под фотографию */
+  .hero__content {
+    width: calc(50% - 3.5rem);
+  }
+
+  .hero__title {
+    font-size: clamp(3.2rem, 5.4vw, 5rem);
+  }
+
+  .hero__visual {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    width: calc(50% - 1.25rem);
+    max-height: none;
+    margin: 0;
+    aspect-ratio: auto;
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* ---------- Welcome ---------- */
+.welcome__top {
+  display: grid;
+  gap: 2.25rem;
+  align-items: center;
+}
+
+.welcome__media {
+  position: relative;
+}
+
+.welcome__media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 120px;
+  box-shadow: var(--shadow);
+}
+
+.welcome__title {
+  margin-top: 0.75rem;
+  font-size: clamp(2rem, 5.4vw, 3.1rem);
+}
+
+.welcome__text {
+  margin-block: 1.25rem 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.features {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.feature {
+  padding: 2rem 1.75rem 2.1rem;
+}
+
+/* Карточки сами являются .reveal: сохраняем плавное появление и добавляем hover */
+.feature.reveal,
+.value-card.reveal {
+  transition:
+    opacity 0.9s var(--ease) var(--reveal-delay, 0ms),
+    transform 0.9s var(--ease) var(--reveal-delay, 0ms),
+    box-shadow 0.5s var(--ease);
+}
+
+.feature.is-visible:hover,
+.value-card.is-visible:hover {
+  transform: translateY(-4px);
+  transition-duration: 0.5s;
+  transition-delay: 0ms;
+}
+
+.feature__icon,
+.value-card__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1rem;
+  border-radius: 50% 50% 50% 14px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  transition: transform 0.6s var(--ease-spring);
+}
+
+.feature:hover .feature__icon,
+.value-card:hover .value-card__icon {
+  transform: rotate(-10deg) scale(1.08);
+}
+
+.feature__title {
+  font-size: 1.5rem;
+}
+
+.feature__text {
+  margin-top: 0.4rem;
+  color: var(--text-muted);
+}
+
+@media (min-width: 760px) {
+  .welcome__top {
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 3.5rem;
+  }
+
+  .features {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* ---------- Services ---------- */
+.services {
+  scroll-margin-top: var(--header-height);
+  /* нежный переход: полоса проявляется и растворяется */
+  background: linear-gradient(180deg, transparent 0%, var(--tint) 16%, var(--tint) 84%, transparent 100%);
+}
+
+.services__grid {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.services__grid > li {
+  display: flex;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+}
+
+.service-card__media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 0 0 0 90px;
+  background: var(--surface-2);
+}
+
+/* у чётных карточек вырез фотографии зеркальный */
+.services__grid > li:nth-child(even) .service-card__media {
+  border-radius: 0 0 90px;
+}
+
+.service-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+
+.service-card:hover .service-card__media img {
+  transform: scale(1.06);
+}
+
+.service-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.5rem 1.6rem 2.1rem;
+}
+
+.service-card__title {
+  font-size: clamp(1.55rem, 3.4vw, 1.9rem);
+}
+
+.service-card__text {
+  flex: 1;
+  color: var(--text-muted);
+}
+
+.service-card__action {
+  align-self: flex-start;
+  margin-top: 0.6rem;
+}
+
+.service-card--skeleton:hover {
+  transform: none;
+}
+
+.service-card--skeleton .service-card__media {
+  border-radius: 0;
+}
+
+@media (min-width: 700px) {
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .service-card__body {
+    padding: 1.9rem 2.1rem 2.4rem;
+  }
+}
+
+/* ---------- About ---------- */
+.about__intro {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.about__collage {
+  position: relative;
+  max-width: 520px;
+  margin-inline: auto;
+  padding: 0 0 12% 0;
+}
+
+.about__photo {
+  object-fit: cover;
+  box-shadow: var(--shadow);
+}
+
+.about__photo--main {
+  width: 82%;
+  aspect-ratio: 4 / 5;
+  border-radius: 999px 999px var(--radius) var(--radius);
+}
+
+.about__photo--roses {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 46%;
+  aspect-ratio: 1;
+  border: 6px solid var(--bg);
+  border-radius: 50%;
+}
+
+.about__photo--gerbera {
+  position: absolute;
+  top: 8%;
+  right: 0;
+  width: 30%;
+  aspect-ratio: 3 / 4;
+  object-position: 78% 50%;
+  border: 5px solid var(--bg);
+  border-radius: var(--radius);
+}
+
+.about__lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.about__quote {
+  margin-top: 1.75rem;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 2px solid var(--rose);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.2vw, 1.8rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--accent-text);
+}
+
+.values {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 7vw, 4.5rem);
+}
+
+.value-card {
+  padding: 2rem 1.75rem 2.1rem;
+}
+
+.value-card__title {
+  font-size: 1.55rem;
+}
+
+.value-card__text {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
+
+@media (min-width: 640px) {
+  .values {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .about__intro {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .values {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .value-card {
+    grid-column: span 2;
+  }
+
+  /* нижний ряд из двух карточек — по центру */
+  .value-card:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+}
+
+/* ---------- CTA ---------- */
+.cta__card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2.5rem, 7vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+  text-align: center;
+  background: var(--cta-bg);
+  border: 1px solid var(--border);
+  border-radius: 96px 40px 104px 40px / 76px 40px 84px 40px;
+  box-shadow:
+    inset 0 1px 0 var(--card-highlight),
+    var(--shadow);
+}
+
+.cta__flower {
+  position: absolute;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.cta__flower--left {
+  top: -34px;
+  left: -30px;
+}
+
+.cta__flower--right {
+  right: -18px;
+  bottom: -26px;
+  transform: rotate(30deg);
+}
+
+.cta__title {
+  position: relative;
+  font-size: clamp(2rem, 5.6vw, 3.2rem);
+}
+
+.cta__text {
+  position: relative;
+  max-width: 540px;
+  margin: 1rem auto 0;
+  font-size: 1.08rem;
+  color: var(--text-muted);
+}
+
+.cta__actions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.1rem 1rem;
+  margin-top: 2rem;
+}

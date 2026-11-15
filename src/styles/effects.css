@@ -1,0 +1,198 @@
+/* ---------- Падающие лепестки ---------- */
+.petals {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+/* Внешний элемент падает и вращается, внутренний — покачивается и «перелистывается». */
+.petal {
+  position: absolute;
+  top: -70px;
+  left: var(--petal-left);
+  width: calc(var(--petal-size) * 0.74);
+  height: var(--petal-size);
+  animation: petal-fall var(--petal-duration) linear var(--petal-delay) infinite;
+  will-change: transform;
+}
+
+.petal__shape {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 96% 14% 92% 20% / 92% 16% 96% 22%;
+  opacity: calc(var(--petal-opacity) * var(--petal-alpha, 1));
+  background:
+    radial-gradient(70% 60% at 30% 24%, var(--petal-light), transparent 62%),
+    linear-gradient(140deg, var(--petal-a), var(--petal-c));
+  animation: petal-sway var(--petal-sway) ease-in-out infinite alternate;
+}
+
+.petal__shape--1 {
+  border-radius: 20% 94% 16% 96% / 22% 92% 14% 96%;
+  background:
+    radial-gradient(70% 60% at 68% 26%, var(--petal-light), transparent 62%),
+    linear-gradient(200deg, var(--petal-b), var(--petal-c));
+}
+
+.petal__shape--2 {
+  border-radius: 90% 26% 96% 10% / 96% 20% 90% 12%;
+  background:
+    radial-gradient(70% 60% at 34% 30%, var(--petal-light), transparent 62%),
+    linear-gradient(150deg, var(--petal-c), var(--petal-b));
+}
+
+.petal__shape--3 {
+  background:
+    radial-gradient(70% 60% at 30% 24%, var(--petal-light), transparent 62%),
+    linear-gradient(140deg, var(--petal-a), var(--petal-b));
+}
+
+/* Глубина: дальние лепестки мельче, прозрачнее и слегка размыты. */
+.petal--far {
+  --petal-alpha: 0.55;
+}
+
+.petal--mid {
+  --petal-alpha: 0.8;
+}
+
+@media (min-width: 900px) {
+  .petal--far .petal__shape {
+    filter: blur(1.2px);
+  }
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--petal-tilt));
+  }
+  50% {
+    transform: translate3d(calc(var(--petal-drift) * 0.7), calc(50vh + 60px), 0)
+      rotate(calc(var(--petal-tilt) + var(--petal-spin) * 0.42));
+  }
+  100% {
+    transform: translate3d(var(--petal-drift), calc(100vh + 140px), 0)
+      rotate(calc(var(--petal-tilt) + var(--petal-spin)));
+  }
+}
+
+@keyframes petal-sway {
+  from {
+    transform: translateX(calc(var(--petal-swing) * -1)) rotateX(0deg) rotateY(-18deg);
+  }
+  to {
+    transform: translateX(var(--petal-swing)) rotateX(32deg) rotateY(46deg);
+  }
+}
+
+/* ---------- Появление при прокрутке ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s var(--ease) var(--reveal-delay, 0ms),
+    transform 0.9s var(--ease) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 0.9s linear infinite;
+}
+
+/* ---------- Скелетон загрузки ---------- */
+.skeleton {
+  display: block;
+  border-radius: 12px;
+  background: linear-gradient(100deg, var(--surface-2) 30%, var(--accent-soft) 50%, var(--surface-2) 70%)
+    0 0 / 220% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeleton--title {
+  width: 60%;
+  height: 28px;
+}
+
+.skeleton--line {
+  width: 100%;
+  height: 14px;
+}
+
+.skeleton--short {
+  width: 75%;
+}
+
+.skeleton--button {
+  width: 170px;
+  height: 46px;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+/* ---------- Уважение к prefers-reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .petals {
+    display: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

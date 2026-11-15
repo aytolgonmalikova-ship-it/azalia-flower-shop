@@ -1,0 +1,230 @@
+rules_version = '2';
+
+// Правила безопасности Firestore для сайта «Азалия».
+// Этот файл — образец: скопируйте его содержимое в консоль Firebase
+// (Firestore Database → Rules) и нажмите Publish.
+//
+// Роли:
+//  - администратор — любой пользователь, у которого есть документ admins/{uid};
+//  - главный администратор — тот, чей UID записан в adminConfig/primary, поле ownerUid;
+//  - пользователь сайта — любой вошедший; у него есть свой профиль users/{uid}
+//    и свои заказы (orders с его userId);
+//  - гость — любой посетитель: читает каталог и одобренные отзывы, оформляет заказ.
+//
+// Товары (products) и заказы (orders) ведут все администраторы, не только главный.
+//
+// Администраторами управляет главный администратор прямо из панели (/admin/admins):
+// добавляет документы admins/{uid}, удаляет их (кроме собственного) и может передать
+// свои полномочия другому администратору (меняет ownerUid). Обычный администратор
+// видит только собственный документ. adminConfig/primary создаётся только в консоли.
+//
+// ВАЖНО: перед публикацией этих правил создайте в консоли adminConfig/primary
+// (ownerUid = UID главного администратора) и admins/{этот же UID}.
+// Иначе после публикации доступа к панели не будет ни у кого.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function hasAdminDoc(uid) {
+      return exists(/databases/$(database)/documents/admins/$(uid));
+    }
+
+    // Если документа adminConfig/primary нет, get() завершается ошибкой
+    // и правило отказывает в доступе.
+    function isMainAdmin() {
+      return signedIn()
+        && get(/databases/$(database)/documents/adminConfig/primary).data.ownerUid == request.auth.uid;
+    }
+
+    function isAdmin() {
+      return signedIn() && (hasAdminDoc(request.auth.uid) || isMainAdmin());
+    }
+
+    match /reviews/{reviewId} {
+      // Гость видит только одобренные отзывы, администратор — все.
+      allow read: if resource.data.status == 'approved' || isAdmin();
+
+      // Гость может оставить отзыв только со статусом «На модерации»
+      // и только с допустимыми полями (ограничения те же, что в src/data/reviews.js).
+      allow create: if request.resource.data.keys().hasOnly(['author', 'rating', 'text', 'createdAt', 'status'])
+        && request.resource.data.keys().hasAll(['author', 'rating', 'text', 'createdAt', 'status'])
+        && request.resource.data.status == 'pending'
+        && request.resource.data.author is string
+        && request.resource.data.author.size() >= 2
+        && request.resource.data.author.size() <= 40
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 10
+        && request.resource.data.text.size() <= 600
+        && request.resource.data.createdAt == request.time;
+
+      // Администратор меняет только статус отзыва.
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status in ['pending', 'approved', 'rejected'];
+
+      allow delete: if isAdmin();
+    }
+
+    // Каталог товаров (src/services/products.js).
+    match /products/{productId} {
+      // Обязательные поля товара; ограничения те же, что в src/services/products.js.
+      function validProduct() {
+        let data = request.resource.data;
+        return data.name is string
+          && data.name.size() >= 1
+          && data.name.size() <= 120
+          && data.price is number
+          && data.price > 0
+          && data.category is string
+          && data.color is string
+          && data.inStock is bool
+          && data.isVisible is bool;
+      }
+
+      // Каталог открыт всем посетителям сайта, включая гостей.
+      allow read: if true;
+
+      // Добавляет, меняет и удаляет товары любой администратор.
+      allow create, update: if isAdmin() && validProduct();
+      allow delete: if isAdmin();
+    }
+
+    // Заказы с сайта (src/services/orders.js).
+    match /orders/{orderId} {
+      // Новый заказ: только известные поля, статус «Новый», время сервера.
+      // userId — либо null (гость), либо UID самого покупателя: чужой подставить нельзя.
+      function validOrder() {
+        let data = request.resource.data;
+        let fields = ['items', 'customer', 'deliveryMethod', 'comment', 'totalPrice', 'status', 'createdAt', 'userId'];
+        let customerFields = ['name', 'phone', 'address'];
+        return data.keys().hasOnly(fields)
+          && data.keys().hasAll(fields)
+          && data.status == 'new'
+          && data.createdAt == request.time
+          && data.items is list
+          && data.items.size() >= 1
+          && data.items.size() <= 50
+          && data.customer is map
+          && data.customer.keys().hasOnly(customerFields)
+          && data.customer.keys().hasAll(customerFields)
+          && data.customer.name is string
+          && data.customer.name.size() >= 2
+          && data.customer.name.size() <= 60
+          && data.customer.phone is string
+          && data.customer.phone.size() >= 9
+          && data.customer.phone.size() <= 30
+          && data.customer.address is string
+          && data.customer.address.size() >= 5
+          && data.customer.address.size() <= 200
+          && data.deliveryMethod in ['Курьерская доставка', 'Самовывоз']
+          && data.comment is string
+          && data.comment.size() <= 500
+          && data.totalPrice is number
+          && data.totalPrice > 0
+          && (data.userId == null || (signedIn() && data.userId == request.auth.uid));
+      }
+
+      // Оформить заказ может любой посетитель сайта.
+      allow create: if validOrder();
+
+      // Все заказы читает администратор, свои — вошедший покупатель.
+      // (Покупателю для списка нужен запрос с условием where('userId', '==', uid).)
+      allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+
+      // Администратор меняет только статус заказа.
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status in ['new', 'processing', 'delivering', 'completed', 'cancelled'];
+
+      allow delete: if isAdmin();
+    }
+
+    match /admins/{uid} {
+      // Каждый может проверить только собственный документ, список видит главный.
+      allow get: if signedIn() && (request.auth.uid == uid || isMainAdmin());
+      allow list: if isMainAdmin();
+
+      // Добавляет администраторов только главный: ровно три поля, дата — время сервера
+      // (ограничения те же, что в src/services/admins.js).
+      allow create: if isMainAdmin()
+        && request.resource.data.keys().hasOnly(['name', 'email', 'addedAt'])
+        && request.resource.data.keys().hasAll(['name', 'email', 'addedAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.name.size() <= 60
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('.+@.+')
+        && request.resource.data.addedAt == request.time;
+
+      // Удаляет тоже только главный, но не собственный документ: главный администратор
+      // (он же текущий пользователь) всегда остаётся в списке.
+      allow delete: if isMainAdmin() && request.auth.uid != uid;
+
+      // Существующие документы не меняются: чтобы исправить имя или email,
+      // администратора удаляют и добавляют заново.
+      allow update: if false;
+    }
+
+    // Профили пользователей сайта. Создаются при регистрации (src/services/users.js).
+    match /users/{userId} {
+      function isOwner() {
+        return signedIn() && request.auth.uid == userId;
+      }
+
+      // Только известные поля. uid и email нельзя подделать: они обязаны совпадать
+      // с учётной записью, иначе в списке можно было бы выдать себя за другого.
+      function validProfile() {
+        let data = request.resource.data;
+        return data.keys().hasOnly(['uid', 'name', 'email', 'phone', 'createdAt'])
+          && data.keys().hasAll(['uid', 'name', 'email', 'createdAt'])
+          && data.uid == userId
+          && data.email == request.auth.token.email
+          && data.name is string
+          && data.name.size() <= 60
+          && (!('phone' in data) || (data.phone is string && data.phone.size() <= 30));
+      }
+
+      // Свой профиль читает сам пользователь, любой профиль и список — главный администратор.
+      allow get: if isOwner() || isMainAdmin();
+      allow list: if isMainAdmin();
+
+      // Пользователь создаёт и меняет только свой документ; дату регистрации менять нельзя.
+      allow create: if isOwner()
+        && validProfile()
+        && request.resource.data.createdAt == request.time;
+      allow update: if isOwner()
+        && validProfile()
+        && request.resource.data.createdAt == resource.data.createdAt;
+
+      allow delete: if false;
+    }
+
+    match /adminConfig/primary {
+      allow get: if isAdmin();
+      allow list: if false;
+
+      // Передача полномочий: только текущий главный, только поле ownerUid,
+      // только администратору из admins. Прежний главный тоже должен быть в admins,
+      // чтобы после передачи остаться обычным администратором.
+      allow update: if isMainAdmin()
+        && request.resource.data.keys().hasOnly(['ownerUid'])
+        && request.resource.data.ownerUid is string
+        && request.resource.data.ownerUid != resource.data.ownerUid
+        && hasAdminDoc(request.resource.data.ownerUid)
+        && hasAdminDoc(request.auth.uid);
+
+      allow create, delete: if false;
+    }
+
+    // Всё остальное закрыто.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

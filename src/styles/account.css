@@ -1,0 +1,411 @@
+/* ---------- Аккаунт в шапке ---------- */
+.account-menu {
+  position: relative;
+  display: flex;
+}
+
+.account-menu__placeholder {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.account-menu__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 0.45rem;
+  min-width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.account-menu__button:hover,
+.account-menu__button[aria-expanded='true'] {
+  background: var(--surface-2);
+}
+
+/* Подпись рядом с иконкой — только на широких экранах, где в шапке есть место */
+.account-menu__label {
+  display: none;
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 1100px) {
+  .header__cta .btn__label {
+    white-space: nowrap;
+  }
+}
+
+/* Узкий десктоп: чуть сжимаем меню, чтобы кнопка аккаунта поместилась в строку шапки */
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .header__inner {
+    gap: 0.65rem;
+  }
+
+  .nav__list {
+    gap: 0.6rem;
+  }
+
+  .account-menu__button,
+  .account-menu__placeholder {
+    min-width: 42px;
+    width: 42px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .account-menu__button {
+    padding-inline: 0.85rem;
+  }
+
+  .account-menu__label {
+    display: inline;
+  }
+}
+
+.account-menu__list {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  min-width: 230px;
+  max-width: min(300px, calc(100vw - 2 * var(--gutter)));
+  padding: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  animation: fade-up 0.25s var(--ease) both;
+}
+
+.account-menu__list[hidden] {
+  display: none;
+}
+
+.account-menu__user {
+  margin-bottom: 0.35rem;
+  padding: 0.5rem 0.75rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.account-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 0.75rem;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.account-menu__item svg {
+  flex-shrink: 0;
+  color: var(--accent-text);
+}
+
+.account-menu__item:hover {
+  background: var(--surface-2);
+  color: var(--accent-text);
+}
+
+/* ---------- Вход и регистрация ---------- */
+.auth-checking {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 30vh;
+  color: var(--text-muted);
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.auth-card__mark {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+.auth-card__title {
+  font-size: clamp(1.9rem, 6vw, 2.4rem);
+}
+
+.auth-card__subtitle {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.auth-tabs__tab {
+  min-height: 44px;
+  padding: 0 0.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.auth-tabs__tab:hover {
+  background: var(--surface-2);
+}
+
+.auth-tabs__tab.is-active {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.auth-tabs__tab:disabled {
+  cursor: not-allowed;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.auth-form__submit {
+  margin-top: 0.5rem;
+}
+
+.auth-card__switch {
+  margin-top: 1.25rem;
+  color: var(--text-muted);
+}
+
+.auth-card__switch-link {
+  min-height: 44px;
+  padding: 0 0.15rem;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.auth-card__switch-link:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* ---------- Личный кабинет ---------- */
+.account__header {
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.account__title {
+  margin-top: 0.75rem;
+  font-size: clamp(2rem, 5.4vw, 3rem);
+  overflow-wrap: anywhere;
+}
+
+.account__grid {
+  display: grid;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .account__grid {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+.account-card {
+  min-width: 0;
+}
+
+.account-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-details__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.account-details__row:first-child {
+  padding-top: 0;
+}
+
+.account-details dt,
+.account-uid__label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.account-details dd {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--heading);
+  overflow-wrap: anywhere;
+}
+
+.account-uid {
+  margin-top: 0.9rem;
+}
+
+.account-uid__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.account-uid__value {
+  flex: 1 1 220px;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--heading);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+.account-uid__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 46px;
+  padding: 0 1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent-text);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.account-uid__copy:hover {
+  background: var(--accent-soft);
+  border-color: var(--rose);
+}
+
+.account-uid__hint {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.account-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.account-card__actions .btn {
+  margin-left: auto;
+}
+
+.account-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.75rem 1.25rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.account-orders__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.account-orders__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.account-orders__text {
+  max-width: 380px;
+  margin-bottom: 0.6rem;
+  color: var(--text-muted);
+}
