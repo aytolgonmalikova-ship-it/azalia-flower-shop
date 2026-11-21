@@ -236,50 +236,53 @@ export default function CartPage() {
                     )}
                   </div>
 
-                  {available && (
-                    <div
-                      className="cart-qty"
-                      role="group"
-                      aria-label={t('cart.quantityLabel', { name: title })}
+                  {/* На телефоне — отдельный ряд управления; на широких экранах обёртка «растворяется» */}
+                  <div className="cart-line__controls">
+                    {available && (
+                      <div
+                        className="cart-qty"
+                        role="group"
+                        aria-label={t('cart.quantityLabel', { name: title })}
+                      >
+                        <button
+                          type="button"
+                          className="cart-qty__btn"
+                          aria-label={t('cart.decrease')}
+                          disabled={quantity <= 1 || isSubmitting}
+                          onClick={() => setQuantity(productId, quantity - 1)}
+                        >
+                          <Minus size={16} />
+                        </button>
+                        <span className="cart-qty__value" aria-live="polite">
+                          {quantity}
+                        </span>
+                        <button
+                          type="button"
+                          className="cart-qty__btn"
+                          aria-label={t('cart.increase')}
+                          disabled={quantity >= ORDER_QUANTITY_MAX || isSubmitting}
+                          onClick={() => setQuantity(productId, quantity + 1)}
+                        >
+                          <Plus size={16} />
+                        </button>
+                      </div>
+                    )}
+
+                    {available && (
+                      <strong className="cart-line__total">{price(product.price * quantity)}</strong>
+                    )}
+
+                    <button
+                      type="button"
+                      className="cart-line__remove"
+                      aria-label={t('cart.removeLabel', { name: title })}
+                      title={t('cart.remove')}
+                      disabled={isSubmitting}
+                      onClick={() => remove(productId)}
                     >
-                      <button
-                        type="button"
-                        className="cart-qty__btn"
-                        aria-label={t('cart.decrease')}
-                        disabled={quantity <= 1 || isSubmitting}
-                        onClick={() => setQuantity(productId, quantity - 1)}
-                      >
-                        <Minus size={16} />
-                      </button>
-                      <span className="cart-qty__value" aria-live="polite">
-                        {quantity}
-                      </span>
-                      <button
-                        type="button"
-                        className="cart-qty__btn"
-                        aria-label={t('cart.increase')}
-                        disabled={quantity >= ORDER_QUANTITY_MAX || isSubmitting}
-                        onClick={() => setQuantity(productId, quantity + 1)}
-                      >
-                        <Plus size={16} />
-                      </button>
-                    </div>
-                  )}
-
-                  {available && (
-                    <strong className="cart-line__total">{price(product.price * quantity)}</strong>
-                  )}
-
-                  <button
-                    type="button"
-                    className="cart-line__remove"
-                    aria-label={t('cart.removeLabel', { name: title })}
-                    title={t('cart.remove')}
-                    disabled={isSubmitting}
-                    onClick={() => remove(productId)}
-                  >
-                    <Trash2 size={18} />
-                  </button>
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
                 </li>
               );
             })}

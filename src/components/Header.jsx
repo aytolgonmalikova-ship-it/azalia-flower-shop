@@ -61,14 +61,18 @@ export default function Header() {
               ))}
             </ul>
           </nav>
-          <LanguageSwitcher />
+          <div className="header__panel-row">
+            <LanguageSwitcher />
+            {/* На самых узких экранах переключатель темы живёт в меню, а не в шапке */}
+            <ThemeToggle className="header__theme--panel" />
+          </div>
           <Button to="/contact" size="sm" className="header__cta" onClick={closeMenu}>
             {t('header.cta')}
           </Button>
         </div>
 
         <div className="header__tools">
-          <ThemeToggle />
+          <ThemeToggle className="header__theme--bar" />
           <Link
             to="/cart"
             className="header__cart"

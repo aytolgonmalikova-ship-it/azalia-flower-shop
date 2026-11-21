@@ -95,9 +95,9 @@
   scroll-snap-type: x proximity;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  /* края ленты растворяются, намекая, что её можно прокрутить */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 18px), transparent);
-  mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 18px), transparent);
+  /* правый край ленты растворяется, намекая, что её можно прокрутить; левый не трогаем — иначе первая вкладка выглядит обрезанной */
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 18px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 18px), transparent);
   padding-inline: 2px 14px;
 }
 

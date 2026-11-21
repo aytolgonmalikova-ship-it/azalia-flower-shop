@@ -40,7 +40,7 @@
 /* Подпись рядом с иконкой — только на широких экранах, где в шапке есть место */
 .account-menu__label {
   display: none;
-  max-width: 9rem;
+  max-width: 6rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

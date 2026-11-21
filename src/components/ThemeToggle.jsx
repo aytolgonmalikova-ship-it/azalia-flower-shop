@@ -5,7 +5,7 @@ import { useTheme } from '../context/ThemeContext.jsx';
 const PETAL_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
 
 // Кнопка-цветок: лепестки поворачиваются при смене темы.
-export default function ThemeToggle() {
+export default function ThemeToggle({ className = '' }) {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
@@ -13,7 +13,7 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
-      className="theme-toggle"
+      className={`theme-toggle${className ? ` ${className}` : ''}`}
       onClick={toggleTheme}
       aria-label={isDark ? t('theme.toLight') : t('theme.toDark')}
       title={isDark ? t('theme.toLight') : t('theme.toDark')}

@@ -151,12 +151,68 @@
   color: var(--accent-text);
 }
 
+.header__panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .header__panel .lang-switcher {
   align-self: flex-start;
 }
 
+/* Копия переключателя темы в меню — видна только на самых узких экранах */
+.header__theme--panel {
+  display: none;
+}
+
 .header__cta {
   align-self: stretch;
+}
+
+/* Телефоны: шапка должна помещаться в ширину экрана без горизонтального скролла */
+@media (max-width: 479px) {
+  .header__inner {
+    gap: 0.5rem;
+  }
+
+  .logo {
+    min-width: 0;
+  }
+
+  .logo__caption {
+    display: none;
+  }
+
+  .header__tools {
+    gap: 2px;
+  }
+
+  .header__tools .theme-toggle,
+  .header__cart,
+  .account-menu__button,
+  .account-menu__placeholder,
+  .header__burger {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 399px) {
+  .logo__mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header__theme--bar {
+    display: none;
+  }
+
+  .header__theme--panel {
+    display: grid;
+  }
 }
 
 @media (min-width: 1100px) {
@@ -211,6 +267,10 @@
   .nav__link:hover::after,
   .nav__link.active::after {
     transform: scaleX(1);
+  }
+
+  .header__panel-row {
+    display: contents;
   }
 
   .header__panel .lang-switcher {
@@ -336,5 +396,33 @@
 @media (min-width: 1000px) {
   .footer__grid {
     grid-template-columns: 1.5fr 0.8fr 1.1fr 1.1fr;
+  }
+}
+
+/*
+ * Десктоп: на кыргызском и английском пункты меню длиннее, и шапка не помещалась
+ * в строку (особенно с именем пользователя у кнопки аккаунта).
+ * Поэтому на десктопе меню, промежутки и переключатель языков чуть компактнее.
+ */
+@media (min-width: 1100px) {
+  .header__inner {
+    gap: 0.75rem;
+  }
+
+  .nav__list {
+    gap: clamp(0.9rem, 1.3vw, 1.4rem);
+  }
+
+  .nav__link {
+    font-size: 0.92rem;
+  }
+
+  .header__panel .lang-switcher__button {
+    min-width: 36px;
+    padding-inline: 0.4rem;
+  }
+
+  .header__tools {
+    gap: 0.15rem;
   }
 }

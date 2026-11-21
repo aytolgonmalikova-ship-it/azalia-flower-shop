@@ -81,6 +81,11 @@
   border-bottom: 1px solid var(--border);
 }
 
+/* Обёртка ряда управления: на широких экранах её дети встают в сетку строки напрямую */
+.cart-line__controls {
+  display: contents;
+}
+
 .cart-line:first-child {
   padding-top: 0;
 }
@@ -112,7 +117,7 @@
   font-weight: 600;
   line-height: 1.2;
   color: var(--heading);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .cart-line__price {
@@ -374,4 +379,49 @@
   flex-shrink: 0;
   margin-top: 0.1rem;
   color: var(--accent-text);
+}
+
+/*
+ * Телефон: сумма и кнопка удаления больше не отнимают ширину у названия.
+ * Название занимает всю строку рядом с фото, а счётчик, сумма и удаление
+ * встают отдельным рядом под ними (с переносом, если сумма очень длинная).
+ */
+@media (max-width: 479px) {
+  .cart-line {
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-areas:
+      'thumb info'
+      'controls controls';
+    column-gap: 0.85rem;
+  }
+
+  .cart-line__thumb {
+    width: 64px;
+    height: 64px;
+  }
+
+  .cart-line__title {
+    font-size: 1.2rem;
+  }
+
+  .cart-line__controls {
+    grid-area: controls;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cart-line__total {
+    margin-left: auto;
+  }
+
+  .cart-line__remove {
+    margin-right: -10px;
+  }
+
+  .cart-line .cart-qty__btn {
+    width: 36px;
+    height: 36px;
+  }
 }
